@@ -23,7 +23,7 @@ function Game() {
     }
 }
 
-var _canvas = document.getElementById("canvas");
+var _canvas = document.getElementById("gameCanvas");
 var _canvasContext = _canvas.getContext('2d');
 
 _canvasContext.fillStyle = "rgb(127,0,0)";
