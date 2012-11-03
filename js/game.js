@@ -1,7 +1,30 @@
-var Game = {}
+function Game() {
+    this.Initialize = function () {
+    // initialize all game variables
+    }
+    this.LoadContent = function () {
+    // load content – graphics, sound etc.
+    // since all content is loaded run main game loop
+    // Calls RunGameLoop method every ‘draw interval’
+        this.GameLoop = setInterval(this.RunGameLoop, this.DrawInterval);
+    }
 
-Game.fps = 30;
-Game.initalize = function() {
-    this.entries = [];
-    this.context = $("#gamearea").getContext("2d");
+    this.RunGameLoop = function (game) {
+        this.Update();
+        this.Draw();
+    }
+
+    this.Update = function () {
+    // update game variables, handle user input, perform calculations etc.
+    }
+
+    this.Draw = function () {
+    // draw game frame
+    }
 }
+
+var _canvas = document.getElementById("canvas");
+var _canvasContext = _canvas.getContext('2d');
+
+_canvasContext.fillStyle = "rgb(127,0,0)";
+_canvasContext.fillRect =(10, 20, 100, 85);
