@@ -23,8 +23,10 @@ function Game() {
     }
 }
 
-var _canvas = document.getElementById("canvas");
-var _canvasContext = _canvas.getContext('2d');
+function gameInit() {
+    var _canvas = document.getElementById("gameCanvas");
+    var _canvasContext = _canvas.getContext('2d');
 
-_canvasContext.fillStyle = "rgb(127,0,0)";
-_canvasContext.fillRect =(10, 20, 100, 85);
+    _canvasContext.fillStyle = "rgb(127,0,0)";
+    _canvasContext.fillRect =(10, 20, 100, 85);
+}
