@@ -1,7 +1,23 @@
 function Game() {
-    this.Initialize = function () {
-    // initialize all game variables
+    this.initMap = function(map_size, tile_size) {
+        //for (var x = 0; x < map_size; x + this.tile_size) {
+
+        /*    for (var y = 0; y < map_size; y + this.tile_size) {
+                _canvasContext.drawImage(this.water_tile, x, y);
+            } */
+        //}
     }
+
+
+    this.Initialize = function () {
+        var map = [];
+        var map_size = 5;
+        var tile_size = 32;
+
+        this.initMap(map_size, tile_size);
+
+    }
+
     this.LoadContent = function () {
     // load content – graphics, sound etc.
     // since all content is loaded run main game loop
@@ -24,9 +40,16 @@ function Game() {
 }
 
 function gameInit() {
-    var _canvas = document.getElementById("gameCanvas");
-    var _canvasContext = _canvas.getContext('2d');
+    _canvas = document.getElementById("gameCanvas");
+    _canvasContext = _canvas.getContext('2d');
 
-    _canvasContext.fillStyle = "rgb(127,0,0)";
-    _canvasContext.fillRect =(10, 20, 100, 85);
+    var water_tile = new Image();
+    water_tile.onload = function() {
+        _canvasContext.drawImage(water_tile, 5, 5);
+        _canvasContext.drawImage(water_tile, 50, 50);
+    };
+    water_tile.src = "img/water.png";
+
+    myGame = new Game;
+    myGame.Initialize();
 }
