@@ -149,3 +149,91 @@ function gameInit() {
     myGame.Initialize();
 
 }
+
+function updateLand() {
+    var landProb = [33, 66, 99];
+    var landProbGen;
+    var waterFarID = 1;
+    var waterNearID = 2;
+    var grassID = 3;
+    var forrestID = 4;
+    var mountainID = 5;
+    var mountainSnowID = 6;
+    var sandID = 7;
+
+    for(var y = 0; y < map_size; y++)
+	{
+        for(var x = 0; x < map_size; x++)
+        {
+            changeNearTo(rows, x, y, waterNearID, sandID);
+        }
+	}
+
+    for(var y = 0; y < map_size; y++)
+	{
+        for(var x = 0; x < map_size; x++)
+        {
+            changeNearTo(rows, x, y, sandID, waterNearID);
+        }
+	}
+
+	for(var y = 0; y < map_size; y++)
+	{
+        for(var x = 0; x < map_size; x++)
+        {
+            if(rows[x][y] === grassID)
+            {
+		        landProbGen = Math.floor(Math.random() * 99)
+ 
+		        if (landProbGen <= landProb[0]) // Leave it as land
+		            continue;
+ 
+                else if(landProbGen > landProb[0] && landProbGen <= landProb[1]) // Set it as Mountain
+                {
+                    rows[x][y] = mountainID;     
+                }
+ 
+                else if(landProbGen > landProb[1]) // Set it as Forrest 
+                {
+                    rows[x][y] = forrestID;
+                }
+            }
+        }
+	}
+}
+
+function changeNearTo(array, x, y, compareID, newID) {
+
+    if (array[x][y].type === compareID) {
+        if (array[x + 1][y] && (x + 1) < map_size) {
+            array[x + 1][y].type = newID;
+        }
+
+        else if (array[x - 1][y] && (x - 1) > map_size) {
+            array[x - 1][y].type = newID;
+        }
+
+        else if (array[x - 1][y - 1] && (x - 1) > map_size && (y - 1) > map_size) {
+            array[x - 1][y - 1].type = newID;
+        }
+
+        else if (array[x][y - 1] && (y - 1) > map_size) {
+            array[x][y - 1].type = newID;
+        }
+        else if (array[x + 1][y - 1] && (x + 1) < map_size && (y - 1) > map_size) {
+            array[x + 1][y - 1].type = newID;
+        }
+
+        else if (array[x - 1][y + 1] && (x - 1) > map_size && (y + 1) < map_size) {
+            array[x - 1][y + 1].type = newID;
+        }
+
+        else if (array[x][y + 1] && (y + 1) < map_size) {
+            array[x][y + 1].type = newID;
+        }
+
+        else if (array[x + 1][y + 1] && (x + 1) < map_size && (y + 1) < map_size) {
+            array[x + 1][y + 1].type = newID;
+        }
+    }
+}
