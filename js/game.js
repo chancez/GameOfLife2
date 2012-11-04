@@ -459,10 +459,10 @@ function gameInit() {
 
     mousePos = {x: 0, y: 0};
     
-    document.getElementById("makegraph").onmousedown = function()
-    {
-	   	
-    }
+    //document.getElementById("makegraph").onmousedown = function()
+    //{
+	   //	
+    //}
 
     myGame = new Game;
     myGame.Initialize();
@@ -590,20 +590,25 @@ function updateSand(rows) {
     var mountainID = 5;
     var mountainSnowID = 6;
     var sandID = 7;
+    var snowyMount = randRange(map_size);
 
     //water to sand
-    for (var y = 0; y < map_size; y++)
-        for (var x = 0; x < map_size; x++)
-            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID)
-                if (checkSurround(rows, x, y, waterID, 3))
+    for (var y = 0; y < map_size; y++) 
+        for (var x = 0; x < map_size; x++) 
+            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) 
+                if (checkSurround(rows, x, y, waterID, 3)) 
                     rows[x][y] = sandID;
 
     //Changes mountain to snowy is surrounded by a certain amount of mountains
     for (var y = 0; y < map_size; y++)
         for (var x = 0; x < map_size; x++)
-            if (rows[x][y] === mountainID)
-                if (checkSurround(rows, x, y, mountainID, 6))
-                    rows[x][y] = mountainSnowID;
+            if (rows[x][y] === mountainID) {
+
+                snowyMount = randRange(map_size);
+
+                if (checkSurroundWithException(rows, x, y, mountainID, mountainSnowID, 8) && snowyMount > 33)
+                    rows[x][y] = mountainSnowID;//tileFlood(x, y, 75, 25, mountainSnowID, rows);
+            }
 
     for (var y = 0; y < map_size; y++)  // Sets water to waterNear if its suppose to be     <------------------------------------------------
         for (var x = 0; x < map_size; x++)
@@ -675,7 +680,67 @@ function checkSurround(rows, x, y, chosenID, limit){    // Used to check is a ti
         }
 }
 
+function checkSurroundWithException(rows, x, y, chosenID, dontCareID,  limit){    // Used to check is a tile is being touched by at least X amounts of A tiles
 
+    var howManyWater = 0;
+
+        if ((x + 1) < map_size){    // ONE
+            if (rows[x + 1][y] === chosenID || rows[x + 1][y] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if((x - 1) >= 0){   //  TWO
+            if(rows[x - 1][y] === chosenID || rows[x - 1][y] === dontCareID)
+            {
+                howManyWater++;
+            }
+        }
+
+        if ((x - 1) >= 0 && (y - 1) > 0) {   // THREE
+            if (rows[x - 1][y - 1] === chosenID || rows[x - 1][y - 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if((y - 1) >= 0) {  // FOUR
+            if(rows[x][y - 1] === chosenID || rows[x][y - 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((x + 1) < map_size && (y - 1) > 0) {    // FIVE
+            if (rows[x + 1][y - 1] === chosenID || rows[x + 1][y - 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((x - 1) >= 0 && (y + 1) < map_size) {    // SIX
+            if (rows[x - 1][y + 1] === chosenID | rows[x - 1][y + 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((y + 1) < map_size) {   // SEVEN
+            if (rows[x][y + 1] === chosenID || rows[x][y + 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((x + 1) < map_size && (y + 1) < map_size) { // EIGHT
+            if (rows[x + 1][y + 1] === chosenID || rows[x + 1][y + 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if (howManyWater >= limit) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+}
 //checks if is land or not
 var isLand = function (posX,posY,rows) {
     if (rows[posX][posY] === 3) {
