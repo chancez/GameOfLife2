@@ -75,7 +75,7 @@ function Map(tileArray)
 	{
 		var i = 0;
 		var j = 0;
-		for (var x = camerax; x < camerax+mapx; x++)
+		for (var x = camerax; x < Math.floor(camerax+mapx); x++)
 		{
 			for (var y = cameray; y < cameray+mapy; y++)
 			{
@@ -109,14 +109,18 @@ function Game() {
 
 
     this.Initialize = function () {
+        this.fps = 30;
+        this.DrawInterval = 50000/this.fps //1000 for ms
 		var tileArray = new TileArray();
         this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
-        this.RunGameLoop();
 
         _canvas.addEventListener('mousemove', function(event) {
             mousePos= getMousePos(_canvas, event);
         }, false);
+
+        //this.LoadContent();
+        this.RunGameLoop();
     }
 
     this.LoadContent = function () {
@@ -133,6 +137,24 @@ function Game() {
 
     this.Update = function () {
     // update game variables, handle user input, perform calculations etc.
+        var x = mousePos.x;
+        var y = mousePos.y;
+
+        console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
+
+        switch(x)
+        {
+            case x > 540 - 2*tile_size:
+                camerax += 1/this.fps;
+                break;
+            default:
+                break;
+        }
+
+        switch(y)
+        {
+
+        }
     }
 
     this.Draw = function () {
@@ -144,6 +166,7 @@ function gameInit() {
     _canvas = document.getElementById("gameCanvas");
     _canvasContext = _canvas.getContext('2d');
 
+    mousePos = {x: 0, y: 0};
 
     myGame = new Game;
     myGame.Initialize();
