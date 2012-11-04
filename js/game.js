@@ -75,9 +75,12 @@ function Map(tileArray)
 	{
 		var i = 0;
 		var j = 0;
-		for (var x = camerax; x < Math.floor(camerax+mapx); x++)
+        var camx = Math.floor(camerax);
+        var camy = Math.floor(cameray);
+        console.log(camx);
+		for (var x = camx; x < camx+mapx; x++)
 		{
-			for (var y = cameray; y < cameray+mapy; y++)
+			for (var y = camy; y < camy+mapy; y++)
 			{
 		    	_canvasContext.drawImage(this.tiles[x][y].getImage(), i*tile_size, j*tile_size);
 		    	j++;
@@ -107,10 +110,11 @@ function Game() {
 	var width = document.getElementById("gameCanvas").getAttribute("width");
 	var height = document.getElementById("gameCanvas").getAttribute("height");
 
+    var that = this;
 
     this.Initialize = function () {
         this.fps = 30;
-        this.DrawInterval = 50000/this.fps //1000 for ms
+        this.DrawInterval = 1000/this.fps;
 		var tileArray = new TileArray();
         this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
@@ -119,8 +123,8 @@ function Game() {
             mousePos= getMousePos(_canvas, event);
         }, false);
 
-        //this.LoadContent();
-        this.RunGameLoop();
+        this.LoadContent();
+        //this.RunGameLoop();
     }
 
     this.LoadContent = function () {
@@ -131,24 +135,19 @@ function Game() {
     }
 
     this.RunGameLoop = function () {
-        this.Update();
-        this.Draw();
+        that.Update();
+        that.Draw();
     }
 
     this.Update = function () {
     // update game variables, handle user input, perform calculations etc.
-        var x = mousePos.x;
+        var x = Math.floor(mousePos.x/32);
         var y = mousePos.y;
 
         console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
-        switch(x)
-        {
-            case x > 540 - 2*tile_size:
-                camerax += 1/this.fps;
-                break;
-            default:
-                break;
+        if (x > mapx - 2){// - 2*tile_size:
+            camerax += .5;
         }
 
         switch(y)
