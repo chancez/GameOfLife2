@@ -138,10 +138,20 @@ function Map(tileArray)
         {
 	        y_cord = map_size -1;
         }
+        var popTotal = 0;
+        for (var x = 0; x < map_size; x++)
+        {
+	        for (var y = 0; y < map_size; y++)
+	        {
+		        popTotal += this.tiles[x][y].population;
+	        }
+        }
 
-        _canvasContext.fillStyle = "yellow";
+        _canvasContext.fillStyle = "#ffffe0";
         _canvasContext.font = "15px Arial";
-        _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Population: " + Math.round(this.tiles[x_cord][y_cord].population*10), 10 , 470)
+        _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
+        ", Total Population: " + Math.round(popTotal)
+        , 10 , 470)
     }
 
     this.getNeightbors = function(x,y) {
@@ -333,9 +343,13 @@ function Game() {
 		            {
 			            newPop -= currPop*2;
 		            }
-		            if (currType == 4 && currPop > 1.5)
+		            if (currType == 4 && currPop > 1.1)
 		            {
 			        	that.Map.tiles[x][y].setType(3);
+		            }
+		            if (currType == 3)
+		            {
+			            limit = 1.3;
 		            }
                     var tiles = that.Map.getNeightbors(x,y);
 
