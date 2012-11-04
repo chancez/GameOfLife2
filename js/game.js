@@ -667,7 +667,7 @@ function updateSand(rows) {
                     rows[x][y] = mountainSnowID;//tileFlood(x, y, 75, 25, mountainSnowID, rows);
             }
 
-    for (var y = 0; y < map_size; y++)  // Sets water to waterNear if its suppose to be     <------------------------------------------------
+    for (var y = 0; y < map_size; y++)  // Sets water to waterNear if its suppose to be
         for (var x = 0; x < map_size; x++)
             if (rows[x][y] === waterID)
                 for (var counter = 3; counter < 8; counter++)
@@ -807,42 +807,6 @@ var isLand = function (posX,posY,rows) {
         return false;
     }
 }
-
-function snowyMount() { //supposed to add s mountains, but is not working yet, need rows neighbor func
-    var neighbors;
-    var mount = 0;
-
-    for(var i = 0; i < map_size; i++) {
-        for(var j = 0; j < map_size; j++) {
-
-            if(rows[i][j] === 5){
-                neighbors = Map.getNeighbors[i][j];
-                for(var k = 0; k < 8; k++) {
-                    if(neighbors.t_left.type === 5)
-                        mount++;
-                    if(neighbors.top.type === 5)
-                        mount++;
-                    if(neighbors.t_right.type === 5)
-                        mount++;
-                    if(neighbors.left.type === 5)
-                        mount++;
-                    if(neighbors.right.type === 5)
-                        mount++;
-                    if(neighbors.b_left.type === 5)
-                        mount++;
-                    if(neighbors.bottom.type === 5)
-                        mount++;
-                    if(neighbors.b_left.type === 5)
-                        mount++;
-                    if(mount >= 4) {
-                        Map.tiles(i,j).type === 6;
-                    }
-                }
-            }
-        }
-    }
-}
-
 
 function minimap(map) {
 
