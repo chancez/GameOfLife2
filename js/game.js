@@ -194,7 +194,7 @@ function Game() {
 
     this.Initialize = function () {
         this.fps = 30;
-        this.DrawInterval = 1000/this.fps;
+        this.DrawInterval = 10000/this.fps;
         this.CheckMouseInterval = 5000/this.fps;
 		var tileArray = new TileArray();
         this.Map = new Map(tileArray);
@@ -283,6 +283,7 @@ function Game() {
 	    		newPops[x][y] = newPop;
 	    	}
 	    }
+	    
 	    for (var x = 0; x < map_size; x++)
 	    {
 	    	for (var y = 0; y < map_size; y++)
@@ -290,14 +291,13 @@ function Game() {
 	    		var newPop = 0;
 
 	    		// calculate the new population value of the tile x, y
-	    		// to get tile x,y population: that.Map.getTiles()[x][y].population
-	    		// to get tile x,y type: that.Map.getTiles()[x][y].type
+	    		
 	    		var currType = that.Map.getTiles()[x][y].type;
 		    	var currPop = that.Map.getTiles()[x][y].population;
 
 	    		if (currType == 1 || currType == 2)
 	    		{
-	    			newPop += -1* currPop;
+	    			newPop -= currPop;
 	    		}
 	    		else
 	    		{
@@ -306,7 +306,7 @@ function Game() {
 			    		newPop += .1;
 		    		}
 
-		    		if (currPop > .4)
+		    		if (currPop == .4)
 		    		{
 		    			var tiles = that.Map.getNeightbors(x,y);
 		    			for (tile in tiles)
@@ -316,6 +316,7 @@ function Game() {
 				    		{
 			    				if (tiles[tile].type != 1 && tiles[tile].type != 2)
 			    				{
+				    				console.log(tile);
 				    				newPops[tiles[tile].x][tiles[tile].y] += .1;
 				    			}
 				    		}
