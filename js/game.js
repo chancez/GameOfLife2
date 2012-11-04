@@ -50,7 +50,7 @@ function Tile(x, y, type)
     this.population = 0;
     this.setType = function(newType)
     {
-    	this.life = 1000;
+    	this.life = 200;
 	    this.type = newType;
 	    this.img = function(type){
         switch(type)
@@ -366,7 +366,7 @@ function Game() {
 			    		if (tiles[tile].type == 4 || tiles[tile].type < 3)
 			    		{
 				    		limit += .2;
-				    		tiles[tile].life += 1;
+				    		tiles[tile].life += Math.round(tiles[tile].population*10);
 			    		}
 		    		}
 
