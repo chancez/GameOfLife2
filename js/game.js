@@ -165,7 +165,10 @@ function Game() {
 	        mousePos= getMousePos(event);
 	        var x = Math.floor(mousePos.x/tile_size) + camerax;
 	        var y = Math.floor(mousePos.y/tile_size) + cameray;
-	        that.Map.getTiles()[x][y].population += .1;
+	        if (that.Map.getTiles()[x][y].population < .9)
+	        {
+	       	 	that.Map.getTiles()[x][y].population += .1
+	       	}
         }
 
         this.LoadContent();
