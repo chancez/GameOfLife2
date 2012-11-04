@@ -7,46 +7,68 @@ var mapy = 15;
 var camerax = 40;
 var cameray = 40;
 
+images = {
+ water_far: 'img/water_far.png',
+ water_near: 'img/water_near.png',
+ grass: 'img/grass.png',
+ forest: 'img/forest.png',
+ mountains: 'img/mountains.png',
+ mountains_snow: 'img/mountains_snow.png',
+ sand: 'img/sand.png',
+ wasteland: 'img/wasteland.png'
+}
+
+water_far = new Image();
+water_far.src = images.water_far;
+
+water_near = new Image();
+water_near.src = images.water_near;
+
+grass = new Image();
+grass.src = images.grass;
+
+forest = new Image();
+forest.src = images.forest;
+
+mountain = new Image();
+mountain.src = images.mountains;
+
+mountain_snow = new Image();
+mountain_snow.src = images.mountains_snow;
+
+sand = new Image();
+sand.src = images.sand;
+
+wasteland = new Image();
+wasteland.src = images.wasteland;
+
 function Tile(x, y, type)
 {
 	this.x = x;
 	this.y = y;
 	this.type = type;
 	this.population = 0;
-	switch(type)
-	{
-		case 1:
-			this.imagePath = 'img/water_far.png';
-			break;
-		case 2:
-			this.imagePath = 'img/water_near.png';
-			break;
-		case 3:
-			this.imagePath = 'img/grass.png';
-			break;
-		case 4:
-			this.imagePath = 'img/forest.png';
-			break;
-		case 5:
-			this.imagePath = 'img/mountains.png';
-			break;
-		case 6:
-			this.imagePath = 'img/mountains_snow.png';
-			break;
-		case 7:
-			this.imagePath = 'img/sand.png';
-			break;
-		case 8:
-			this.imagePath = 'img/wasteland.png';
-			break;
-	}
-	this.getImage = function()
-	{
-		var img = new Image();
-		img.src = this.imagePath;
-		return img;
-	}
-	this.img = this.getImage();
+	this.img = function(type){
+        switch(type)
+        {
+            case 1:
+                return water_far;
+            case 2:
+                return water_near;
+            case 3:
+                return grass;
+            case 4:
+                return forest;
+            case 5:
+                return mountains;
+            case 6:
+                return mountains_snow;
+            case 7:
+                return sand;
+            case 8:
+                return wasteland;
+        }
+    }(type);
 }
 
 function Map(tileArray)
@@ -82,7 +104,7 @@ function Map(tileArray)
 		{
 			for (var y = camy; y < camy+mapy; y++)
 			{
-		    	_canvasContext.drawImage(this.tiles[x][y].getImage(), i*tile_size, j*tile_size);
+		    	_canvasContext.drawImage(this.tiles[x][y].img, i*tile_size, j*tile_size);
 		    	_canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population + ")";
 		    	_canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
 		    	j++;
@@ -126,7 +148,7 @@ function Game() {
         _canvas.addEventListener('mousemove', function(event) {
             mousePos= getMousePos(event);
         }, false);
-        
+
         _canvas.onmousedown = function(event)
         {
 	        mousePos= getMousePos(event);
@@ -151,7 +173,7 @@ function Game() {
         that.Update();
         that.Draw();
     }
-    
+
     this.checkMouse = function()
     {
     // update game variables, handle user input, perform calculations etc.
@@ -186,11 +208,11 @@ function Game() {
     }
 
     this.Update = function () {
-    
+
 	    // SET RULES FOR NEW TILESET HERE
 	    var newPops = new Array();
 	    for (var i = 0; i < map_size; i++)
-	    {	
+	    {
 	    	newPops[i] = new Array();
 	    }
 
@@ -334,7 +356,7 @@ function tileFlood(startPosX, startPosY, tileProbComp, tileProbDec, tileType, ro
 	    	tileFlood(startPosX+1, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
 			tilesChanged++;
     	}
-    	console.log(tilesChanged);
+    	//console.log(tilesChanged);
     }
 }
 
