@@ -1,23 +1,65 @@
+var map_size = 5;
+var tile_size = 32;
+
+function Tile(x, y, type)
+{
+	this.x = x;
+	this.y = y;
+	this.type = type;
+	switch(type)
+	{
+		case 1:
+			this.imagePath = 'img/water.png';
+			break;
+		case 2:
+			this.imagePath = 'img/grass.png';
+			break;
+	}	
+	this.getImage = function()
+	{
+		var img = new Image();
+		img.src = this.imagePath;
+		return img;
+	}
+	this.img = this.getImage();
+}
+	
+function Map(tileArray)
+{
+	this.tiles = new Array();
+	this.initMap = function(map_size)
+	{
+		for (i = 0; i < map_size; i++)
+		{
+			var tileRow = new Array();
+			for (j = 0; j < map_size; j++)
+			{
+				tileRow[j] = new Tile(i, j, 1);
+			}
+			this.tiles[i] = tileRow;
+		}
+	}
+	this.getTile = function(x, y)
+	{
+		return this.tiles[x][y];
+	}
+	this.getTiles = function()
+	{
+		return this.tiles;
+	}
+}
+
 function Game() {
 	var width = document.getElementById("gameCanvas").getAttribute("width");
 	var height = document.getElementById("gameCanvas").getAttribute("height");
-	
-    this.initMap = function(map_size, tile_size) {
-        //for (var x = 0; x < map_size; x + this.tile_size) {
 
-        /*    for (var y = 0; y < map_size; y + this.tile_size) {
-                _canvasContext.drawImage(this.water_tile, x, y);
-            } */
-        //}
-    }
-
+	var tileArray = new Array();
+	this.Map = new Map(tileArray);
 
     this.Initialize = function () {
         var map = [];
-        var map_size = 5;
-        var tile_size = 32;
 
-        this.initMap(map_size, tile_size);
+        this.Map.initMap(map_size);
 
     }
 
@@ -42,21 +84,22 @@ function Game() {
     }
 }
 
-function Map()
-{
-	
-}
-
 function gameInit() {
     _canvas = document.getElementById("gameCanvas");
     _canvasContext = _canvas.getContext('2d');
 
-    var water_tile = new Image();
-    water_tile.onload = function() {
-        _canvasContext.drawImage(water_tile, 5, 5);
-        _canvasContext.drawImage(water_tile, 50, 50);
-    };
-    water_tile.src = "img/water.png";
+    myGame = new Game;
+    myGame.Initialize();
+    
+	var tiles = myGame.Map.getTiles();
+	for (x in tiles)
+	{
+    	for (y in tiles[x])
+    	{
+	    	_canvasContext.drawImage(tiles[x][y].getImage(), x*tile_size, y*tile_size);
+    	}
+	}
+
 
     myGame = new Game;
     myGame.Initialize();
