@@ -69,10 +69,12 @@ function Tile(x, y, type)
                 return wasteland;
         }
     }(type);
+
 }
 
 function Map(tileArray)
 {
+    var that = this;
 	this.tiles = new Array();
 	this.initMap = function(map_size)
 	{
@@ -86,14 +88,17 @@ function Map(tileArray)
 			this.tiles[i] = tileRow;
 		}
 	}
+
 	this.getTile = function(x, y)
 	{
 		return this.tiles[x][y];
 	}
+
 	this.getTiles = function()
 	{
 		return this.tiles;
 	}
+
 	this.drawMap = function()
 	{
 		var i = 0;
@@ -123,6 +128,53 @@ function Map(tileArray)
         _canvasContext.fillStyle = "yellow";
         _canvasContext.font = "15px Arial";
         _canvasContext.fillText("Pos: (" + x_cord + ", " + y_cord + ")", 10 , 470)
+    }
+
+    this.getNeightbors = function(x,y) {
+        var neighbors = {
+            "left": null,
+            "right": null,
+            "top": null,
+            "bottom": null,
+            "t_left": null,
+            "t_right": null,
+            "b_left": null,
+            "b_right": null
+        }
+
+        if (x != 0){
+            //checkleft
+            neighbors.left = that.tiles[x-1][y];
+            if (y != 0) {
+                //check top left
+                neighbors.t_left = that.tiles[x-1][y-1];
+            }
+        }
+        if (x !=  99){
+            //checkright
+            neighbors.right = that.tiles[x+1][y];
+            if (y != 0){
+                //check topright
+                neighbors.t_right = that.tiles[x+1][y-1];
+            }
+            if (y != 99){
+                //check bottom right
+                neighbors.b_right = that.tiles[x+1][y+1];
+            }
+        }
+        if (y != 0) {
+            //checktop
+            neighbors['top'] = that.tiles[x][y-1]; //array notation because top might be reserved
+        }
+        if (y != 99) {
+            //check bottom
+            neighbors.bottom = that.tiles[x][y+1];
+            if (x != 0){
+                //check bottom left
+                neighbors.b_left = that.tiles[x-1][y+1]
+            }
+        }
+        return neighbors;
     }
 }
 
@@ -241,26 +293,26 @@ function Game() {
 	    	for (var y = 0; y < map_size; y++)
 	    	{
 	    		var newPop = 0;
-	    		
+
 	    		// calculate the new population value of the tile x, y
 	    		// to get tile x,y population: that.Map.getTiles()[x][y].population
 	    		// to get tile x,y type: that.Map.getTiles()[x][y].type
 	    		var currType = that.Map.getTiles()[x][y].type;
-	    		
+
 	    		if (currType == 1 || currType == 2)
 	    		{
 	    		}
 	    		else
 	    		{
 		    		var currPop = that.Map.getTiles()[x][y].population;
-		    		
+
 		    		if (currPop < .7)
 		    		{
 			    		newPop += .1;
 		    		}
-		    		
+
 	    		}
-	    		
+
 
 	    		// end calculate
 	    		newPops[x][y] = newPop;
