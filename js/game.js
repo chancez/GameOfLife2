@@ -60,7 +60,7 @@ function Tile(x, y, type)
             case 4:
                 return forest;
             case 5:
-                return mountains;
+                return mountain;
             case 6:
                 return mountains_snow;
             case 7:
@@ -600,6 +600,16 @@ function checkSurround(rows, x, y, chosenID, limit){
         else {
             return false;
         }
+}
+
+//checks if is land or not
+var isLand = function (posX,posY,rows) {
+    if (rows[posX][posY] === 3) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 function snowyMount() { //supposed to add s mountains, but is not working yet, need rows neighbor func
