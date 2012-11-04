@@ -1,3 +1,9 @@
+#logo
+{
+  margin: auto;
+  display: block;
+}
+
 div.gameArea
 {
 	margin-left:auto;
@@ -9,16 +15,16 @@ canvas
 	position:relative;
 	border: 1px solid black;
 	padding-left: 0;
-    	padding-right: 0;
-   	 margin-left: auto;
-   	 margin-right: auto;
-    	display: block;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 body
-{ 
-background-image:url('img/background.png');
-background-repeat:repeat;
-background-attachment:fixed;
-background-position:center; 
+{
+  background-image: url('../img/background.png');
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
