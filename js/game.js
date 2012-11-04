@@ -77,7 +77,6 @@ function Map(tileArray)
 		var j = 0;
         var camx = Math.floor(camerax);
         var camy = Math.floor(cameray);
-        console.log(camx);
 		for (var x = camx; x < camx+mapx; x++)
 		{
 			for (var y = camy; y < camy+mapy; y++)
@@ -138,7 +137,7 @@ function Game() {
 
     this.RunGameLoop = function () {
         that.Update();
-        that.Draw();
+/*         that.Draw(); */
     }
     
     this.checkMouse = function()
@@ -149,18 +148,18 @@ function Game() {
 
         console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
-        if (x < mapx && x > mapx - 2){// - 2*tile_size:
+        if (camerax < map_size && x > mapx - 2){// - 2*tile_size:
             camerax += 1;
         }
-        if (x> 0 && x < 2)
+        if (camerax > 0 && x < 2)
         {
 	        camerax -= 1;
         }
-        if (y < mapy && y > mapy-2)
+        if (cameray < map_size && y > mapy-2)
         {
 	        cameray += 1;
         }
-        if (y > 0 && y < 2)
+        if (cameray > 0 && y < 2)
         {
 	        cameray -= 1;
         }
