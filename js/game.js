@@ -342,6 +342,10 @@ function Game() {
 	    	for (var y = 0; y < map_size; y++)
 	    	{
 	    		that.Map.getTiles()[x][y].population += newPops[x][y];
+	    		if (that.Map.getTiles()[x][y].population > 1)
+	    		{
+		    		that.Map.getTiles()[x][y].population = 1;
+	    		}
 	    	}
 	    }
 
