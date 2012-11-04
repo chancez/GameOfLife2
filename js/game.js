@@ -244,8 +244,12 @@ function Game() {
 	    		// calculate the new population value of the tile x, y
 	    		// to get tile x,y population: that.Map.getTiles()[x][y].population
 	    		// to get tile x,y type: that.Map.getTiles()[x][y].type
-	    		//newPop += .1;
-
+	    		
+	    		var currPop = that.Map.getTiles()[x][y].population;
+	    		if (currPop < .7)
+	    		{
+		    		newPop += .1;
+	    		}
 	    		
 
 
