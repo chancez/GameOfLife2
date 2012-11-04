@@ -1,6 +1,7 @@
 div.gameArea
 {
-	width:900px;
+	width:896px;
+	height:100%;
 	margin-left:auto;
 	margin-right:auto;
 }

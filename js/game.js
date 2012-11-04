@@ -39,6 +39,11 @@ function Game() {
     }
 }
 
+function Map()
+{
+	
+}
+
 function gameInit() {
     _canvas = document.getElementById("gameCanvas");
     _canvasContext = _canvas.getContext('2d');
