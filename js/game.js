@@ -132,7 +132,7 @@ function Game() {
 	        mousePos= getMousePos(event);
 	        var x = Math.floor(mousePos.x/tile_size) + camerax;
 	        var y = Math.floor(mousePos.y/tile_size) + cameray;
-	        that.Map.getTiles()[x][y].population = .5;
+	        that.Map.getTiles()[x][y].population += .1;
         }
 
         this.LoadContent();
@@ -187,8 +187,36 @@ function Game() {
 
     this.Update = function () {
     
-    // SET RULES FOR NEW TILESET HERE
-    
+	    // SET RULES FOR NEW TILESET HERE
+	    var newPops = new Array();
+	    for (var i = 0; i < map_size; i++)
+	    {	
+	    	newPops[i] = new Array();
+	    }
+
+	    for (var x = 0; x < map_size; x++)
+	    {
+	    	for (var y = 0; y < map_size; y++)
+	    	{
+	    		var newPop = 0;
+	    		// calculate the new population value of the tile x, y
+	    		// to get tile x,y population: that.Map.getTiles()[x][y].population
+	    		// to get tile x,y type: that.Map.getTiles()[x][y].type
+	    		
+	    		// end calculate
+	    		newPops[x][y] = newPop;
+	    	}
+	    }
+
+
+	    for (var x = 0; x < map_size; x++)
+	    {
+	    	for (var y = 0; y < map_size; y++)
+	    	{
+	    		that.Map.getTiles()[x][y].population = newPops[x][y];
+	    	}
+	    }
+
     }
 
     this.Draw = function () {
