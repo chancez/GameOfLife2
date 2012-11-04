@@ -110,10 +110,13 @@ function Game() {
 
     this.Initialize = function () {
 		var tileArray = new TileArray();
-    	this.Map = new Map(tileArray);
+        this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
         this.RunGameLoop();
 
+        _canvas.addEventListener('mousemove', function(event) {
+            mousePos= getMousePos(_canvas, event);
+        }, false);
     }
 
     this.LoadContent = function () {
@@ -141,7 +144,8 @@ function gameInit() {
     _canvas = document.getElementById("gameCanvas");
     _canvasContext = _canvas.getContext('2d');
 
+
     myGame = new Game;
     myGame.Initialize();
-    
+
 }
