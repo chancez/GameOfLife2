@@ -518,6 +518,11 @@ function gameInit() {
     	}
     	_canvasContext.stroke();
     }
+    document.getElementById("restart").onmousedown = function () {
+        myGame.stop();
+        numClicks = 0;
+        myGame.Initialize();
+    };
 
 }
 
