@@ -520,53 +520,49 @@ function updateSand(rows) {
     var mountainSnowID = 6;
     var sandID = 7;
 
+
     //water to sand
-    for (var y = 0; y < map_size; y++) 
-    {
-        for (var x = 0; x < map_size; x++) 
-        {
-            if(rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) 
-            {
-                if (checkSurround(rows, x, y, waterID, 3))
-                {
+    for (var y = 0; y < map_size; y++) {
+        for (var x = 0; x < map_size; x++) {
+            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) {
+                if (checkSurround(rows, x, y, waterID, 1)) {
                     rows[x][y] = sandID;
                 }
             }
         }
     }
 
-    //removes weird sand islands
-    for (var y = 0; y < map_size; y++) 
-    {
-        for (var x = 0; x < map_size; x++) 
-        {
-            if(rows[x][y] === sandID) 
-            {
-                if (checkSurround(rows, x, y, waterID, 5))
-                {
+    //Cleans out weird loner Sands
+    for (var y = 0; y < map_size; y++) {
+        for (var x = 0; x < map_size; x++) {
+            if (rows[x][y] === sandID) {
+                if (checkSurround(rows, x, y, waterID, 5)) {
                     rows[x][y] = waterNearID;
                 }
             }
         }
     }
 
-    //more removes
-    for (var y = 0; y < map_size; y++) 
-    {
-        for (var x = 0; x < map_size; x++) 
-        {
-            if(rows[x][y] === sandID) 
-            {
-                if (checkSurround(rows, x, y, waterID, 7))
-                {
+    //Cleans out weird loner sands even more
+    for (var y = 0; y < map_size; y++) {
+        for (var x = 0; x < map_size; x++) {
+            if (rows[x][y] === sandID) {
+                if (checkSurround(rows, x, y, waterID, 6)) {
                     rows[x][y] = waterNearID;
                 }
             }
         }
     }
+
+    for (var y = 0; y < map_size; y++)  // Sets water to waterNear if its suppose to be     <------------------------------------------------
+        for (var x = 0; x < map_size; x++)
+            if (rows[x][y] === waterID)
+                for (var counter = 3; counter < 8; counter++)
+                    if (counter != 6 && checkSurround(rows, x, y, counter, 1))
+                        rows[x][y] = waterNearID;
 }
 
-function checkSurround(rows, x, y, chosenID, limit){
+function checkSurround(rows, x, y, chosenID, limit){    // Used to check is a tile is being touched by at least X amounts of A tiles
 
     var howManyWater = 0;
 
@@ -627,6 +623,7 @@ function checkSurround(rows, x, y, chosenID, limit){
             return false;
         }
 }
+
 
 //checks if is land or not
 var isLand = function (posX,posY,rows) {
