@@ -8,6 +8,11 @@ div.gameArea
 {
 	margin-left:auto;
 	margin-right:auto;
+	text-align: left;
+	font-family: Arial;
+	color:black;
+	font-weight:bold;
+	width:896px;
 }
 
 canvas

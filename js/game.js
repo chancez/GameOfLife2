@@ -1,8 +1,8 @@
 var map_size = 100;
 var tile_size = 32;
 
-var mapx = 20;
-var mapy = 15;
+var mapx = 0;
+var mapy = 0;
 
 var camerax = 40;
 var cameray = 40;
@@ -154,7 +154,8 @@ _canvasContext.fillStyle = "#ffffe0";
         ", Total Population: " + Math.round(popTotal)
         , 10 , 470)
 */
-		
+		document.getElementById("gameText").innerHTML = ("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
+        ", Total Population: " + Math.round(popTotal));
     }
 
     this.getNeightbors = function(x,y) {
@@ -446,6 +447,8 @@ function Game() {
 }
 
 function gameInit() {
+	mapx = document.getElementById("gameCanvas").getAttribute("width")/tile_size;
+	mapy = document.getElementById("gameCanvas").getAttribute("height")/tile_size;
     _canvas = document.getElementById("gameCanvas");
     _canvasContext = _canvas.getContext('2d');
 
