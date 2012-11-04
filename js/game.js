@@ -856,7 +856,7 @@ function minimap(map) {
         minis[i] = new Array();
         
         for(var j = 0; j < map_size; j++) {
-            mapCxt.fillStyle = map.tiles[i][j].color;
+            mapCxt.fillStyle = map.tiles[j][i].color;
             mapCxt.fillRect(xAxis+=2,yAxis,2,2);
         }
        xAxis-=200;
