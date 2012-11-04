@@ -525,7 +525,7 @@ function updateSand(rows) {
     for (var y = 0; y < map_size; y++) {
         for (var x = 0; x < map_size; x++) {
             if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) {
-                if (checkSurround(rows, x, y, waterID, 1)) {
+                if (checkSurround(rows, x, y, waterID, 3)) {
                     rows[x][y] = sandID;
                 }
             }
@@ -547,7 +547,7 @@ function updateSand(rows) {
     for (var y = 0; y < map_size; y++) {
         for (var x = 0; x < map_size; x++) {
             if (rows[x][y] === sandID) {
-                if (checkSurround(rows, x, y, waterID, 6)) {
+                if (checkSurround(rows, x, y, waterID, 7)) {
                     rows[x][y] = waterNearID;
                 }
             }
