@@ -233,6 +233,14 @@ function Game() {
             }
         }
 
+        var doKeyDown = function(event) {
+            alert(event.keyCode);
+        }
+
+        _canvas.addEventListener( "keydown", doKeyDown, true);
+
+
+
         this.LoadContent();
         //this.RunGameLoop();
     }
@@ -249,6 +257,7 @@ function Game() {
         that.Update();
         that.Draw();
     }
+
 
     this.checkMouse = function()
     {
@@ -312,7 +321,7 @@ function Game() {
 
                 var currType = that.Map.getTiles()[x][y].type;
                 var currPop = that.Map.getTiles()[x][y].population;
-                
+
                 if (that.Map.getTiles()[x][y].life <= 0 && currType != 8)
                 {
 	                that.Map.getTiles()[x][y].setType(8);
@@ -553,10 +562,10 @@ function updateSand(rows) {
     var sandID = 7;
 
     //water to sand
-    for (var y = 0; y < map_size; y++) 
-        for (var x = 0; x < map_size; x++) 
-            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) 
-                if (checkSurround(rows, x, y, waterID, 3)) 
+    for (var y = 0; y < map_size; y++)
+        for (var x = 0; x < map_size; x++)
+            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID)
+                if (checkSurround(rows, x, y, waterID, 3))
                     rows[x][y] = sandID;
 
     //Changes mountain to snowy is surrounded by a certain amount of mountains
