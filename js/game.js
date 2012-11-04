@@ -92,16 +92,17 @@ function Map(tileArray)
 
 function TileArray()
 {
-	//generate the map here
+	//generate the water here
 	var rows = new Array();
 	for (var i = 0; i < map_size; i++)
 	{
 		rows[i] = new Array();
-		for (var j = 0; j < map_size; j++)
-		{
-			rows[i][j] = Math.floor((Math.random()*8)+1);
+		for(var j = 0; j < map_size; j++) {
+			rows[i][j] = 1;
 		}
 	}
+	setBaseTile(rows);
+
 	return rows;
 }
 
@@ -190,6 +191,94 @@ function gameInit() {
     myGame = new Game;
     myGame.Initialize();
 
+}
+
+function setBaseTile(rows) { //may be parameters (continent, tileType, tileProbComp, tileProbDec, originalTileType)
+	var continent = 25;
+    var tileProbDec = (randRange(20)+5)/100; //probability subtraction constant
+    var tileProbComp = .95; //original prob
+    var tileType = 3;
+    var startPosX = randRange(map_size);
+    var startPosY = randRange(map_size);
+    console.log(startPosX + " " + startPosY)
+
+    for (var i = 0; i<continent; i++) {
+    	startPosX = randRange(map_size);
+    	startPosY = randRange(map_size);
+    	tileProbDec = (randRange(24)+1)/100;
+
+    	rows[startPosX][startPosY] = 3; //sets base land points for continents
+    	tileFlood(startPosX,startPosY,tileProbComp, tileProbDec, tileType, rows);
+    }
+
+};
+
+//surrounds base cases of types with similar types
+function tileFlood(startPosX, startPosY, tileProbComp, tileProbDec, tileType, rows) {
+   	var tilesChanged = null;
+
+   	while(tilesChanged != 0) {
+
+   		tileProbComp -= tileProbDec; //automatic probability decrementing
+   		tilesChanged = 0; //base case
+
+    	//top left of base
+	   	if(startPosX-1 >= 0 && startPosY-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY-1] != tileType) {
+	   		rows[startPosX-1][startPosY-1] = tileType;
+	   		tileFlood(startPosX-1, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
+	   		tilesChanged++;
+	    }
+
+    	//top mid of base
+	   	if(startPosY-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX][startPosY-1] != tileType) {
+	   		rows[startPosX][startPosY-1] = tileType;
+	   		tileFlood(startPosX, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
+	   		tilesChanged++;
+	    }
+
+    	//top left of base
+	   	if(startPosY-1 >= 0 && startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY-1] != tileType) {
+	   		rows[startPosX+1][startPosY-1] = tileType;
+	   		tileFlood(startPosX+1, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
+	   		tilesChanged++;
+	    }
+
+	   	//left of base
+	   	if(startPosX-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY] != tileType) {
+	   		rows[startPosX-1][startPosY] = tileType;
+	    	tileFlood(startPosX-1, startPosY, tileProbComp, tileProbDec, tileType, rows);
+	    	tilesChanged++;
+	    }
+
+	    //right of base
+	    if(startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY] != tileType) {
+	    	rows[startPosX+1][startPosY] = tileType;
+	    	tileFlood(startPosX+1, startPosY, tileProbComp, tileProbDec, tileType, rows);
+	    	tilesChanged++;
+	    }
+
+	    //bot left of base
+    	if(startPosY+1 < map_size && startPosX-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY+1] != tileType) {
+    		rows[startPosX-1][startPosY+1] = tileType;
+    		tileFlood(startPosX-1, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
+    		tilesChanged++;
+    	}
+
+    	//bot mid of base
+	    if(startPosY+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX][startPosY+1] != tileType) {
+	    	rows[startPosX][startPosY+1] = tileType;
+	    	tileFlood(startPosX, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
+	    	tilesChanged++;
+	    }
+
+	    //bot right of base
+	    if(startPosY+1 < map_size && startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY+1] != tileType) {
+	    	rows[startPosX+1][startPosY+1] = tileType;
+	    	tileFlood(startPosX+1, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
+			tilesChanged++;
+    	}
+    	console.log(tilesChanged);
+    }
 }
 
 function updateLand() {

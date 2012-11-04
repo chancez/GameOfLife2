@@ -3,7 +3,7 @@
 //gives a random number between 1 and the map_size
 function randRange(map_size)
 {
-	var randomNum = Math.floor(Math.random()*map_size)+1;
+	var randomNum = Math.floor(Math.random()*map_size);
 	return randomNum;
 }
 
