@@ -147,11 +147,14 @@ function Map(tileArray)
 	        }
         }
 
-        _canvasContext.fillStyle = "#ffffe0";
+        /*
+_canvasContext.fillStyle = "#ffffe0";
         _canvasContext.font = "15px Arial";
         _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
         ", Total Population: " + Math.round(popTotal)
         , 10 , 470)
+*/
+		
     }
 
     this.getNeightbors = function(x,y) {
@@ -391,7 +394,7 @@ function Game() {
 				    		limit += .2;
 				    		tiles[tile].life += Math.round(tiles[tile].population*10);
 			    		}
-			    		if (tiles[tile].type == 8 && currPop >= 1.5)
+			    		if (tiles[tile].type == 8 && currPop >= 1.6)
 			    		{
 				    		tiles[tile].setType(3);
 			    		}
