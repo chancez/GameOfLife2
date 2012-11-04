@@ -246,18 +246,20 @@ function Game() {
 	    		// to get tile x,y population: that.Map.getTiles()[x][y].population
 	    		// to get tile x,y type: that.Map.getTiles()[x][y].type
 	    		var currType = that.Map.getTiles()[x][y].type;
+		    	var currPop = that.Map.getTiles()[x][y].population;
 	    		
 	    		if (currType == 1 || currType == 2)
 	    		{
+	    			newPop += -1* currPop;
 	    		}
 	    		else
 	    		{
-		    		var currPop = that.Map.getTiles()[x][y].population;
 		    		
 		    		if (currPop < .7)
 		    		{
 			    		newPop += .1;
 		    		}
+		    		
 		    		
 	    		}
 	    		
