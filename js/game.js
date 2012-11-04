@@ -235,8 +235,6 @@ function Game() {
 	    		// to get tile x,y type: that.Map.getTiles()[x][y].type
 	    		newPop += .1;
 
-	    		if (newPop >= .4){
-
 	    		}
 
 
