@@ -521,6 +521,7 @@ function gameInit() {
     document.getElementById("restart").onmousedown = function () {
         myGame.stop();
         numClicks = 0;
+        maxPop = 0;
         myGame.Initialize();
     };
 
