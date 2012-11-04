@@ -13,6 +13,7 @@ div.gameArea
 	color:black;
 	font-weight:bold;
 	width:896px;
+	display:relative;
 }
 
 div#logodiv
