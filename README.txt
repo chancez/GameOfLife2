@@ -8,12 +8,14 @@ and artists in a 24 hour programming tournament held
 by Urban Airship in Portland, Oregon.
 
 Developers:
-Cezary Wojcik
-Chance Zibolski
-Damian Kulp
-Fauzi Kliman
-Hamzah Khan
-Isaac Archer
+-----------
+
+Aaron Celeste, 
+Cezary Wojcik, 
+Chance Zibolski, 
+Damian Kulp, 
+Fauzi Kliman, 
+Gabriel Kulp, 
+Hamzah Khan, 
+Isaac Archer, 
 Towaki Takikawa
-Gabriel Kulp
-Aaron Celeste
