@@ -255,7 +255,7 @@ function Game() {
 	    		else
 	    		{
 		    		
-		    		if (currPop < .7)
+		    		if (currPop < .7 && currPop > 0)
 		    		{
 			    		newPop += .1;
 		    		}
