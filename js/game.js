@@ -122,7 +122,7 @@ function Map(tileArray)
 
         _canvasContext.fillStyle = "yellow";
         _canvasContext.font = "15px Arial";
-        _canvasContext.fillText("Pos: (" + x_cord + ", " + y_cord + ")", 10 , 470)
+        _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Population: " + Math.round(this.tiles[x_cord][y_cord].population*10), 10 , 470)
     }
 }
 
