@@ -33,8 +33,8 @@ forest.src = images.forest;
 mountain = new Image();
 mountain.src = images.mountains;
 
-mountain_snow = new Image();
-mountain_snow.src = images.mountains_snow;
+mountains_snow = new Image();
+mountains_snow.src = images.mountains_snow;
 
 sand = new Image();
 sand.src = images.sand;
@@ -300,7 +300,7 @@ function Game() {
                 newPops[x][y] = newPop;
             }
         }
-        
+
         for (var x = 0; x < map_size; x++)
         {
             for (var y = 0; y < map_size; y++)
@@ -308,7 +308,7 @@ function Game() {
                 var newPop = newPops[x][y];
 
                 // calculate the new population value of the tile x, y
-                
+
                 var currType = that.Map.getTiles()[x][y].type;
                 var currPop = that.Map.getTiles()[x][y].population;
 
@@ -329,12 +329,12 @@ function Game() {
 			        	that.Map.tiles[x][y].setType(3);
 		            }
                     var tiles = that.Map.getNeightbors(x,y);
-	    			
+
 		    		if (currPop < .5 && currPop > 0)
 		    		{
 			    		newPop += .1;
 		    		}
-		    		
+
 		    		if (currPop > .4)
 		    		{
 		    			for (tile in tiles)
@@ -349,7 +349,7 @@ function Game() {
 				    		}
 		    			}
 		    		}
-		    		
+
 		    		var sum = 0;
 		    		for (tile in tiles)
 		    		{
@@ -359,23 +359,23 @@ function Game() {
 				    		limit += .2;
 			    		}
 		    		}
-		    		
+
 		    		if (sum >= 2)
 		    		{
 			    		newPop -= .2;
 		    		}
-		    		
+
 		    		if (currPop >= limit)
 		    		{
 			    		newPop -= .2;
 		    		}
-		    		
+
 		    		// end calculate
 		    		newPops[x][y] = newPop;
                 }
 
             }
-            
+
         }
 
 
@@ -389,7 +389,7 @@ function Game() {
 	                that.Map.getTiles()[x][y].population = 0;
                 }
             }
-            
+
         }
 
     }
@@ -654,7 +654,7 @@ function snowyMount() { //supposed to add s mountains, but is not working yet, n
 
     for(var i = 0; i < map_size; i++) {
         for(var j = 0; j < map_size; j++) {
-            
+
             if(rows[i][j] === 5){
                 neighbors = Map.getNeighbors[i][j];
                 for(var k = 0; k < 8; k++) {
