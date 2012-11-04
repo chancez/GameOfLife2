@@ -12,6 +12,7 @@ function Tile(x, y, type)
 	this.x = x;
 	this.y = y;
 	this.type = type;
+	this.population = 0;
 	switch(type)
 	{
 		case 1:
@@ -82,6 +83,8 @@ function Map(tileArray)
 			for (var y = camy; y < camy+mapy; y++)
 			{
 		    	_canvasContext.drawImage(this.tiles[x][y].getImage(), i*tile_size, j*tile_size);
+		    	_canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population + ")";
+		    	_canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
 		    	j++;
 			}
 			j = 0;
@@ -115,7 +118,7 @@ function Game() {
     this.Initialize = function () {
         this.fps = 30;
         this.DrawInterval = 1000/this.fps;
-        this.CheckMouseInterval = 7500/this.fps;
+        this.CheckMouseInterval = 5000/this.fps;
 		var tileArray = new TileArray();
         this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
@@ -200,7 +203,7 @@ function setBaseTile(rows) { //may be parameters (continent, tileType, tileProbC
     var tileType = 3;
     var startPosX = randRange(map_size);
     var startPosY = randRange(map_size);
-    console.log(startPosX + " " + startPosY)
+    //console.log(startPosX + " " + startPosY)
 
     for (var i = 0; i<continent; i++) {
     	startPosX = randRange(map_size);
