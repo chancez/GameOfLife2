@@ -4,8 +4,8 @@ var tile_size = 32;
 var mapx = 20;
 var mapy = 15;
 
-var camerax = 0;
-var cameray = 0;
+var camerax = 40;
+var cameray = 40;
 
 function Tile(x, y, type)
 {
