@@ -1,19 +1,4 @@
 rules:
 
-if surrounding tiles total > 3.2 the tile gains .2
-if surrounding tiles total > 1.6 the tile gains .1
-if the tile > .5 surrounding tiles that are unlived (-1) have a 3/4 chance to be set to .5
-if surrounding tiles total > 6.4 the tile loses .2
-if a tile = 1 it loses .1 and and all surrounding tiles lose .1
-if a forrest is alive it gaines .1 per turn for the first 10 then it turns to grass
-if a tile has been alive for mroe than 100 turns then it loses .2^n per turn where n is the number of turns above 100
 
-tile
-	x
-	y
-	name
-	value
-	alive
-	health
-	turns alive
 
