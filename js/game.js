@@ -145,7 +145,14 @@ function Game() {
     // update game variables, handle user input, perform calculations etc.
         var x = Math.floor(mousePos.x/32);
         var y = Math.floor(mousePos.y/32);
-
+        if (x < 0)
+        {
+	        x = 0;
+        }
+        if (y < 0)
+        {
+	        y = 0;
+        }
         console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
         if (camerax < map_size && x > mapx - 2){// - 2*tile_size:
