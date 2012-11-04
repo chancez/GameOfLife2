@@ -38,7 +38,7 @@ function Tile(x, y, type)
 		case 8:
 			this.imagePath = 'img/wasteland.png';
 			break;
-	}	
+	}
 	this.getImage = function()
 	{
 		var img = new Image();
@@ -47,7 +47,7 @@ function Tile(x, y, type)
 	}
 	this.img = this.getImage();
 }
-	
+
 function Map(tileArray)
 {
 	this.tiles = new Array();
@@ -72,7 +72,7 @@ function Map(tileArray)
 		return this.tiles;
 	}
 	this.drawMap = function()
-	{		
+	{
 		var i = 0;
 		var j = 0;
 		for (var x = camerax; x < camerax+mapx; x++)
@@ -107,11 +107,12 @@ function Game() {
 	var width = document.getElementById("gameCanvas").getAttribute("width");
 	var height = document.getElementById("gameCanvas").getAttribute("height");
 
-	
+
     this.Initialize = function () {
 		var tileArray = new TileArray();
     	this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
+        this.Draw();
 
     }
 
@@ -142,24 +143,5 @@ function gameInit() {
 
     myGame = new Game;
     myGame.Initialize();
-    
-	var tiles = myGame.Map.getTiles();
-	var i = 0;
-	var j = 0;
-	for (var x = camerax; x < camerax+mapx; x++)
-	{
-    	for (var y = cameray; y < cameray+mapy; y++)
-    	{
-	    	_canvasContext.drawImage(tiles[x][y].getImage(), i*tile_size, j*tile_size);
-	    	j++;
-    	}
-    	j = 0;
-    	i++;
-	}
 
-
-    myGame = new Game;
-    myGame.Initialize();
-    
-    
 }
