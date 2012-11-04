@@ -44,11 +44,11 @@ wasteland.src = images.wasteland;
 
 function Tile(x, y, type)
 {
-	this.x = x;
-	this.y = y;
-	this.type = type;
-	this.population = 0;
-	this.img = function(type){
+    this.x = x;
+    this.y = y;
+    this.type = type;
+    this.population = 0;
+    this.img = function(type){
         switch(type)
         {
             case 1:
@@ -75,49 +75,49 @@ function Tile(x, y, type)
 function Map(tileArray)
 {
     var that = this;
-	this.tiles = new Array();
-	this.initMap = function(map_size)
-	{
-		for (var i = 0; i < map_size; i++)
-		{
-			var tileRow = new Array();
-			for (var j = 0; j < map_size; j++)
-			{
-				tileRow[j] = new Tile(i, j, tileArray[i][j]);
-			}
-			this.tiles[i] = tileRow;
-		}
-	}
+    this.tiles = new Array();
+    this.initMap = function(map_size)
+    {
+        for (var i = 0; i < map_size; i++)
+        {
+            var tileRow = new Array();
+            for (var j = 0; j < map_size; j++)
+            {
+                tileRow[j] = new Tile(i, j, tileArray[i][j]);
+            }
+            this.tiles[i] = tileRow;
+        }
+    }
 
-	this.getTile = function(x, y)
-	{
-		return this.tiles[x][y];
-	}
+    this.getTile = function(x, y)
+    {
+        return this.tiles[x][y];
+    }
 
-	this.getTiles = function()
-	{
-		return this.tiles;
-	}
+    this.getTiles = function()
+    {
+        return this.tiles;
+    }
 
-	this.drawMap = function()
-	{
-		var i = 0;
-		var j = 0;
+    this.drawMap = function()
+    {
+        var i = 0;
+        var j = 0;
         var camx = Math.floor(camerax);
         var camy = Math.floor(cameray);
-		for (var x = camx; x < camx+mapx; x++)
-		{
-			for (var y = camy; y < camy+mapy; y++)
-			{
-		    	_canvasContext.drawImage(this.tiles[x][y].img, i*tile_size, j*tile_size);
-		    	_canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population + ")";
-		    	_canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
-		    	j++;
-			}
-			j = 0;
-			i++;
-		}
-	}
+        for (var x = camx; x < camx+mapx; x++)
+        {
+            for (var y = camy; y < camy+mapy; y++)
+            {
+                _canvasContext.drawImage(this.tiles[x][y].img, i*tile_size, j*tile_size);
+                _canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population + ")";
+                _canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
+                j++;
+            }
+            j = 0;
+            i++;
+        }
+    }
 
     this.drawCord = function() {
         var mouse_x = Math.floor(mousePos.x/32);
@@ -172,23 +172,27 @@ function Map(tileArray)
 
 function TileArray()
 {
-	//generate the water here
-	var rows = new Array();
-	for (var i = 0; i < map_size; i++)
-	{
-		rows[i] = new Array();
-		for(var j = 0; j < map_size; j++) {
-			rows[i][j] = 1;
-		}
-	}
-	setBaseTile(rows);
+    //generate the water here
+    var rows = new Array();
+    for (var i = 0; i < map_size; i++)
+    {
+        rows[i] = new Array();
+        for(var j = 0; j < map_size; j++) {
+            rows[i][j] = 1;
+        }
+    }
+    setBaseTile(rows,3); //land creation
+    setBaseTile(rows,4); //growing forests
+    setBaseTile(rows,5); //erecting mountains
 
-	return rows;
+    updateSand(rows); //sandy edges
+
+    return rows;
 }
 
 function Game() {
-	var width = document.getElementById("gameCanvas").getAttribute("width");
-	var height = document.getElementById("gameCanvas").getAttribute("height");
+    var width = document.getElementById("gameCanvas").getAttribute("width");
+    var height = document.getElementById("gameCanvas").getAttribute("height");
 
     var that = this;
 
@@ -196,7 +200,7 @@ function Game() {
         this.fps = 30;
         this.DrawInterval = 10000/this.fps;
         this.CheckMouseInterval = 5000/this.fps;
-		var tileArray = new TileArray();
+        var tileArray = new TileArray();
         this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
 
@@ -206,13 +210,13 @@ function Game() {
 
         _canvas.onmousedown = function(event)
         {
-	        mousePos= getMousePos(event);
-	        var x = Math.floor(mousePos.x/tile_size) + camerax;
-	        var y = Math.floor(mousePos.y/tile_size) + cameray;
-	        if (that.Map.getTiles()[x][y].population < .9)
-	        {
-	       	 	that.Map.getTiles()[x][y].population += .1
-	       	}
+            mousePos= getMousePos(event);
+            var x = Math.floor(mousePos.x/tile_size) + camerax;
+            var y = Math.floor(mousePos.y/tile_size) + cameray;
+            if (that.Map.getTiles()[x][y].population < .9)
+            {
+                that.Map.getTiles()[x][y].population += .1
+            }
         }
 
         this.LoadContent();
@@ -239,11 +243,11 @@ function Game() {
         var y = Math.floor(mousePos.y/32);
         if (x < 0)
         {
-	        x = 0;
+            x = 0;
         }
         if (y < 0)
         {
-	        y = 0;
+            y = 0;
         }
         //console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
@@ -252,107 +256,107 @@ function Game() {
         }
         if (camerax > 0 && x < 2)
         {
-	        camerax -= 1;
+            camerax -= 1;
         }
         if (cameray < map_size-mapy && y > mapy-2)
         {
-	        cameray += 1;
+            cameray += 1;
         }
         if (cameray > 0 && y < 2)
         {
-	        cameray -= 1;
+            cameray -= 1;
         }
-	    that.Draw();
+        that.Draw();
     }
 
     this.Update = function () {
 
-	    // SET RULES FOR NEW TILESET HERE
-	    var newPops = new Array();
-	    for (var i = 0; i < map_size; i++)
-	    {
-	    	newPops[i] = new Array();
-	    }
+        // SET RULES FOR NEW TILESET HERE
+        var newPops = new Array();
+        for (var i = 0; i < map_size; i++)
+        {
+            newPops[i] = new Array();
+        }
 
 
-	    for (var x = 0; x < map_size; x++)
-	    {
-	    	for (var y = 0; y < map_size; y++)
-	    	{
-	    		var newPop = 0;
-	    		newPops[x][y] = newPop;
-	    	}
-	    }
-	    
-	    for (var x = 0; x < map_size; x++)
-	    {
-	    	for (var y = 0; y < map_size; y++)
-	    	{
-	    		var newPop = newPops[x][y];
+        for (var x = 0; x < map_size; x++)
+        {
+            for (var y = 0; y < map_size; y++)
+            {
+                var newPop = 0;
+                newPops[x][y] = newPop;
+            }
+        }
+        
+        for (var x = 0; x < map_size; x++)
+        {
+            for (var y = 0; y < map_size; y++)
+            {
+                var newPop = newPops[x][y];
 
-	    		// calculate the new population value of the tile x, y
-	    		
-	    		var currType = that.Map.getTiles()[x][y].type;
-		    	var currPop = that.Map.getTiles()[x][y].population;
+                // calculate the new population value of the tile x, y
+                
+                var currType = that.Map.getTiles()[x][y].type;
+                var currPop = that.Map.getTiles()[x][y].population;
 
-	    		if (currType == 1 || currType == 2)
-	    		{
-	    			newPop -= currPop;
-	    		}
-	    		else
-	    		{
-	    			
-		    		if (currPop < .7 && currPop > 0)
-		    		{
-			    		newPop += .1;
-		    		}
+                if (currType == 1 || currType == 2)
+                {
+                    newPop -= currPop;
+                }
+                else
+                {
+                    
+                    if (currPop < .7 && currPop > 0)
+                    {
+                        newPop += .1;
+                    }
 
-		    		if (currPop > .4)
-		    		{
-		    			var tiles = that.Map.getNeightbors(x,y);
-		    			for (tile in tiles)
-		    			{
-				    		var chance = randRange(3);
-				    		if (chance == 0)
-				    		{
-			    				if (tiles[tile].type != 1 && tiles[tile].type != 2)
-			    				{
-				    				newPops[tiles[tile].x][tiles[tile].y] += .1;
-				    			}
-				    		}
-		    			}
-		    		}
+                    if (currPop > .4)
+                    {
+                        var tiles = that.Map.getNeightbors(x,y);
+                        for (tile in tiles)
+                        {
+                            var chance = randRange(3);
+                            if (chance == 0)
+                            {
+                                if (tiles[tile].type != 1 && tiles[tile].type != 2)
+                                {
+                                    newPops[tiles[tile].x][tiles[tile].y] += .1;
+                                }
+                            }
+                        }
+                    }
 
-		    		if (currPop >= .9)
-		    		{
-			    		newPop -= .2;
-		    		}
-		    		
-		    		// end calculate
-		    		newPops[x][y] = newPop;
-		    	}
+                    if (currPop >= .9)
+                    {
+                        newPop -= .2;
+                    }
+                    
+                    // end calculate
+                    newPops[x][y] = newPop;
+                }
 
-	    	}
-	    	
-	    }
+            }
+            
+        }
 
 
-	    for (var x = 0; x < map_size; x++)
-	    {
-	    	for (var y = 0; y < map_size; y++)
-	    	{
-	    		that.Map.getTiles()[x][y].population += newPops[x][y];
-	    		if (that.Map.getTiles()[x][y].population > 1)
-	    		{
-		    		that.Map.getTiles()[x][y].population = 1;
-	    		}
-	    	}
-	    }
+        for (var x = 0; x < map_size; x++)
+        {
+            for (var y = 0; y < map_size; y++)
+            {
+                that.Map.getTiles()[x][y].population += newPops[x][y];
+                if (that.Map.getTiles()[x][y].population > 1)
+                {
+                    that.Map.getTiles()[x][y].population = 1;
+                }
+            }
+        }
 
     }
 
     this.Draw = function () {
-    	this.Map.drawMap();
+        this.Map.drawMap();
         this.Map.drawCord();
     }
 }
@@ -368,178 +372,267 @@ function gameInit() {
 
 }
 
-function setBaseTile(rows) { //may be parameters (continent, tileType, tileProbComp, tileProbDec, originalTileType)
-	var continent = 25;
-    var tileProbDec = (randRange(20)+5)/100; //probability subtraction constant
-    var tileProbComp = .95; //original prob
-    var tileType = 3;
+function setBaseTile(rows,tileType) { //may be parameters (continent, tileType, tileProbComp, tileProbDec, originalTileType)
+    var units;
+    var tileProbDec;  //probability subtraction #
+    var tileProbComp; //original prob
     var startPosX = randRange(map_size);
     var startPosY = randRange(map_size);
-    //console.log(startPosX + " " + startPosY)
 
-    for (var i = 0; i<continent; i++) {
-    	startPosX = randRange(map_size);
-    	startPosY = randRange(map_size);
-    	tileProbDec = (randRange(24)+1)/100;
+    switch(tileType){
+        case 3:
+            units = 25;
+            tileProbDec = (randRange(20)+5)/100;
+            tileProbComp = 0.95;
+            break;
+        case 4:
+            units = 30;
+            tileProbDec = (randRange(15)+5)/100;
+            tileProbComp = 0.85;
+            while(!(isLand(startPosX,startPosY,rows))) {
+                startPosX = randRange(map_size);
+                startPosY = randRange(map_size);
+            }
+            break;
+        case 5:
+            units = 18;
+            tileProbDec = (randRange(5)+20)/100;
+            tileProbComp = 0.65;
+            while(!(isLand(startPosX,startPosY,rows))) {
+                startPosX = randRange(map_size);
+                startPosY = randRange(map_size);
+            }
+            break;
+    }
 
-    	rows[startPosX][startPosY] = 3; //sets base land points for continents
-    	tileFlood(startPosX,startPosY,tileProbComp, tileProbDec, tileType, rows);
+    for (var i = 0; i<units; i++) {
+        startPosX = randRange(map_size);
+        startPosY = randRange(map_size);
+        tileProbDec = (randRange(20)+5)/100;
+
+        rows[startPosX][startPosY] = 3; //sets base land points for continents
+        tileFlood(startPosX,startPosY,tileProbComp, tileProbDec, tileType, rows);
     }
 
 };
 
 //surrounds base cases of types with similar types
 function tileFlood(startPosX, startPosY, tileProbComp, tileProbDec, tileType, rows) {
-   	var tilesChanged = null;
+    var tilesChanged = null;
 
-   	while(tilesChanged != 0) {
+    while(tilesChanged != 0) {
 
-   		tileProbComp -= tileProbDec; //automatic probability decrementing
-   		tilesChanged = 0; //base case
+        tileProbComp -= tileProbDec; //automatic probability decrementing
+        tilesChanged = 0; //base case
 
-    	//top left of base
-	   	if(startPosX-1 >= 0 && startPosY-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY-1] != tileType) {
-	   		rows[startPosX-1][startPosY-1] = tileType;
-	   		tileFlood(startPosX-1, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
-	   		tilesChanged++;
-	    }
+        //top left of base
+        if(startPosX-1 >= 0 && startPosY-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY-1] != tileType) {
+            rows[startPosX-1][startPosY-1] = tileType;
+            tileFlood(startPosX-1, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
 
-    	//top mid of base
-	   	if(startPosY-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX][startPosY-1] != tileType) {
-	   		rows[startPosX][startPosY-1] = tileType;
-	   		tileFlood(startPosX, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
-	   		tilesChanged++;
-	    }
+        //top mid of base
+        if(startPosY-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX][startPosY-1] != tileType) {
+            rows[startPosX][startPosY-1] = tileType;
+            tileFlood(startPosX, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
 
-    	//top left of base
-	   	if(startPosY-1 >= 0 && startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY-1] != tileType) {
-	   		rows[startPosX+1][startPosY-1] = tileType;
-	   		tileFlood(startPosX+1, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
-	   		tilesChanged++;
-	    }
+        //top left of base
+        if(startPosY-1 >= 0 && startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY-1] != tileType) {
+            rows[startPosX+1][startPosY-1] = tileType;
+            tileFlood(startPosX+1, startPosY-1, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
 
-	   	//left of base
-	   	if(startPosX-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY] != tileType) {
-	   		rows[startPosX-1][startPosY] = tileType;
-	    	tileFlood(startPosX-1, startPosY, tileProbComp, tileProbDec, tileType, rows);
-	    	tilesChanged++;
-	    }
+        //left of base
+        if(startPosX-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY] != tileType) {
+            rows[startPosX-1][startPosY] = tileType;
+            tileFlood(startPosX-1, startPosY, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
 
-	    //right of base
-	    if(startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY] != tileType) {
-	    	rows[startPosX+1][startPosY] = tileType;
-	    	tileFlood(startPosX+1, startPosY, tileProbComp, tileProbDec, tileType, rows);
-	    	tilesChanged++;
-	    }
+        //right of base
+        if(startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY] != tileType) {
+            rows[startPosX+1][startPosY] = tileType;
+            tileFlood(startPosX+1, startPosY, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
 
-	    //bot left of base
-    	if(startPosY+1 < map_size && startPosX-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY+1] != tileType) {
-    		rows[startPosX-1][startPosY+1] = tileType;
-    		tileFlood(startPosX-1, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
-    		tilesChanged++;
-    	}
+        //bot left of base
+        if(startPosY+1 < map_size && startPosX-1 >= 0 && randRange(map_size) < map_size*tileProbComp && rows[startPosX-1][startPosY+1] != tileType) {
+            rows[startPosX-1][startPosY+1] = tileType;
+            tileFlood(startPosX-1, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
 
-    	//bot mid of base
-	    if(startPosY+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX][startPosY+1] != tileType) {
-	    	rows[startPosX][startPosY+1] = tileType;
-	    	tileFlood(startPosX, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
-	    	tilesChanged++;
-	    }
+        //bot mid of base
+        if(startPosY+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX][startPosY+1] != tileType) {
+            rows[startPosX][startPosY+1] = tileType;
+            tileFlood(startPosX, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
 
-	    //bot right of base
-	    if(startPosY+1 < map_size && startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY+1] != tileType) {
-	    	rows[startPosX+1][startPosY+1] = tileType;
-	    	tileFlood(startPosX+1, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
-			tilesChanged++;
-    	}
-    	//console.log(tilesChanged);
+        //bot right of base
+        if(startPosY+1 < map_size && startPosX+1 < map_size && randRange(map_size) < map_size*tileProbComp && rows[startPosX+1][startPosY+1] != tileType) {
+            rows[startPosX+1][startPosY+1] = tileType;
+            tileFlood(startPosX+1, startPosY+1, tileProbComp, tileProbDec, tileType, rows);
+            tilesChanged++;
+        }
+        //console.log(tilesChanged);
     }
 }
 
-function updateLand() {
-    var landProb = [33, 66, 99];
-    var landProbGen;
-    var waterFarID = 1;
+//turns border land to sand and border water to shallow water
+function updateSand(rows) {
+    var waterID = 1;
     var waterNearID = 2;
-    var grassID = 3;
-    var forrestID = 4;
+    var landID = 3;
+    var forestID = 4;
     var mountainID = 5;
     var mountainSnowID = 6;
     var sandID = 7;
 
-    for(var y = 0; y < map_size; y++)
-	{
-        for(var x = 0; x < map_size; x++)
+    //water to sand
+    for (var y = 0; y < map_size; y++) 
+    {
+        for (var x = 0; x < map_size; x++) 
         {
-            changeNearTo(rows, x, y, waterNearID, sandID);
-        }
-	}
-
-    for(var y = 0; y < map_size; y++)
-	{
-        for(var x = 0; x < map_size; x++)
-        {
-            changeNearTo(rows, x, y, sandID, waterNearID);
-        }
-	}
-
-	for(var y = 0; y < map_size; y++)
-	{
-        for(var x = 0; x < map_size; x++)
-        {
-            if(rows[x][y] === grassID)
+            if(rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) 
             {
-		        landProbGen = Math.floor(Math.random() * 99)
-
-		        if (landProbGen <= landProb[0]) // Leave it as land
-		            continue;
-
-                else if(landProbGen > landProb[0] && landProbGen <= landProb[1]) // Set it as Mountain
+                if (checkSurround(rows, x, y, waterID, 3))
                 {
-                    rows[x][y] = mountainID;
-                }
-
-                else if(landProbGen > landProb[1]) // Set it as Forrest
-                {
-                    rows[x][y] = forrestID;
+                    rows[x][y] = sandID;
                 }
             }
         }
-	}
+    }
+
+    //removes weird sand islands
+    for (var y = 0; y < map_size; y++) 
+    {
+        for (var x = 0; x < map_size; x++) 
+        {
+            if(rows[x][y] === sandID) 
+            {
+                if (checkSurround(rows, x, y, waterID, 5))
+                {
+                    rows[x][y] = waterNearID;
+                }
+            }
+        }
+    }
+
+    //more removes
+    for (var y = 0; y < map_size; y++) 
+    {
+        for (var x = 0; x < map_size; x++) 
+        {
+            if(rows[x][y] === sandID) 
+            {
+                if (checkSurround(rows, x, y, waterID, 7))
+                {
+                    rows[x][y] = waterNearID;
+                }
+            }
+        }
+    }
 }
 
-function changeNearTo(array, x, y, compareID, newID) {
+function checkSurround(rows, x, y, chosenID, limit){
 
-    if (array[x][y].type === compareID) {
-        if (array[x + 1][y] && (x + 1) < map_size) {
-            array[x + 1][y].type = newID;
+    var howManyWater = 0;
+
+        if ((x + 1) < map_size){    // ONE
+            if (rows[x + 1][y] === chosenID) {
+                howManyWater++;
+            }
         }
 
-        else if (array[x - 1][y] && (x - 1) > map_size) {
-            array[x - 1][y].type = newID;
+        if((x - 1) >= 0){   //  TWO
+            if(rows[x - 1][y] === chosenID)
+            {
+                howManyWater++;
+            }
         }
 
-        else if (array[x - 1][y - 1] && (x - 1) > map_size && (y - 1) > map_size) {
-            array[x - 1][y - 1].type = newID;
+        if ((x - 1) >= 0 && (y - 1) > 0) {   // THREE
+            if (rows[x - 1][y - 1] === chosenID) {
+                howManyWater++;
+            }
         }
 
-        else if (array[x][y - 1] && (y - 1) > map_size) {
-            array[x][y - 1].type = newID;
-        }
-        else if (array[x + 1][y - 1] && (x + 1) < map_size && (y - 1) > map_size) {
-            array[x + 1][y - 1].type = newID;
-        }
-
-        else if (array[x - 1][y + 1] && (x - 1) > map_size && (y + 1) < map_size) {
-            array[x - 1][y + 1].type = newID;
+        if((y - 1) >= 0) {  // FOUR
+            if(rows[x][y - 1] === chosenID) {
+                howManyWater++;
+            }
         }
 
-        else if (array[x][y + 1] && (y + 1) < map_size) {
-            array[x][y + 1].type = newID;
+        if ((x + 1) < map_size && (y - 1) > 0) {    // FIVE
+            if (rows[x + 1][y - 1] === chosenID) {
+                howManyWater++;
+            }
         }
 
-        else if (array[x + 1][y + 1] && (x + 1) < map_size && (y + 1) < map_size) {
-            array[x + 1][y + 1].type = newID;
+        if ((x - 1) >= 0 && (y + 1) < map_size) {    // SIX
+            if (rows[x - 1][y + 1] === chosenID) {
+                howManyWater++;
+            }
+        }
+
+        if ((y + 1) < map_size) {   // SEVEN
+            if (rows[x][y + 1] === chosenID) {
+                howManyWater++;
+            }
+        }
+
+        if ((x + 1) < map_size && (y + 1) < map_size) { // EIGHT
+            if (rows[x + 1][y + 1] === chosenID) {
+                howManyWater++;
+            }
+        }
+
+        if (howManyWater >= limit) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+}
+
+function snowyMount() { //supposed to add s mountains, but is not working yet, need rows neighbor func
+    var neighbors;
+    var mount = 0;
+
+    for(var i = 0; i < map_size; i++) {
+        for(var j = 0; j < map_size; j++) {
+            
+            if(rows[i][j] === 5){
+                neighbors = Map.getNeighbors[i][j];
+                for(var k = 0; k < 8; k++) {
+                    if(neighbors.t_left.type === 5)
+                        mount++;
+                    if(neighbors.top.type === 5)
+                        mount++;
+                    if(neighbors.t_right.type === 5)
+                        mount++;
+                    if(neighbors.left.type === 5)
+                        mount++;
+                    if(neighbors.right.type === 5)
+                        mount++;
+                    if(neighbors.b_left.type === 5)
+                        mount++;
+                    if(neighbors.bottom.type === 5)
+                        mount++;
+                    if(neighbors.b_left.type === 5)
+                        mount++;
+                    if(mount >= 4) {
+                        Map.tiles(i,j).type === 6;
+                    }
+                }
+            }
         }
     }
 }
