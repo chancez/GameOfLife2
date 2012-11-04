@@ -14,6 +14,8 @@ var maxPop = 0;
 var width;
 var height;
 
+var numClicks = 0;
+
 images = {
  water_far: 'img/water_far.png',
  water_near: 'img/water_near.png',
@@ -250,13 +252,17 @@ function Game() {
 
         _canvas.onmousedown = function(event)
         {
-            mousePos= getMousePos(event);
-            var x = Math.floor(mousePos.x/tile_size) + camerax;
-            var y = Math.floor(mousePos.y/tile_size) + cameray;
-            if (that.Map.getTiles()[x][y].population < .9 && that.Map.getTiles()[x][y].type > 2)
-            {
-                that.Map.getTiles()[x][y].population += .1
-            }
+        	if (numClicks < 3)
+        	{
+	            mousePos= getMousePos(event);
+	            var x = Math.floor(mousePos.x/tile_size) + camerax;
+	            var y = Math.floor(mousePos.y/tile_size) + cameray;
+	            if (that.Map.getTiles()[x][y].population < .9 && that.Map.getTiles()[x][y].type > 2)
+	            {
+	                that.Map.getTiles()[x][y].population += .1
+	            }
+	        	numClicks++;
+	        }
         }
 
         var doKeyDown = function(event) {
