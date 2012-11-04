@@ -1,4 +1,7 @@
 function Game() {
+	var width = document.getElementById("gameCanvas").getAttribute("width");
+	var height = document.getElementById("gameCanvas").getAttribute("height");
+	
     this.initMap = function(map_size, tile_size) {
         //for (var x = 0; x < map_size; x + this.tile_size) {
 
