@@ -126,6 +126,14 @@ function Game() {
         _canvas.addEventListener('mousemove', function(event) {
             mousePos= getMousePos(event);
         }, false);
+        
+        _canvas.onmousedown = function(event)
+        {
+	        mousePos= getMousePos(event);
+	        var x = Math.floor(mousePos.x/tile_size) + camerax;
+	        var y = Math.floor(mousePos.y/tile_size) + cameray;
+	        that.Map.getTiles()[x][y].population = .5;
+        }
 
         this.LoadContent();
         //this.RunGameLoop();
@@ -141,7 +149,7 @@ function Game() {
 
     this.RunGameLoop = function () {
         that.Update();
-/*         that.Draw(); */
+        that.Draw();
     }
     
     this.checkMouse = function()
@@ -178,6 +186,9 @@ function Game() {
     }
 
     this.Update = function () {
+    
+    // SET RULES FOR NEW TILESET HERE
+    
     }
 
     this.Draw = function () {
