@@ -155,14 +155,14 @@ function Game() {
         }
         console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
-        if (camerax < map_size && x > mapx - 2){// - 2*tile_size:
+        if (camerax < map_size-mapx && x > mapx - 2){// - 2*tile_size:
             camerax += 1;
         }
         if (camerax > 0 && x < 2)
         {
 	        camerax -= 1;
         }
-        if (cameray < map_size && y > mapy-2)
+        if (cameray < map_size-mapy && y > mapy-2)
         {
 	        cameray += 1;
         }
