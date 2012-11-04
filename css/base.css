@@ -50,3 +50,7 @@ body
   background-attachment: fixed;
   background-position: center;
 }
+
+p.center { 
+text-align: center; 
+}
