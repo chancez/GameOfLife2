@@ -306,18 +306,18 @@ function Game() {
                 }
                 else
                 {
-                	
+		    		var limit = .9;
 		            if (currType == 7 || currType == 5 || currType == 6)
 		            {
 		                newPop -= currPop/2;
 		            }
 		            if (currType == 4 && currPop > 0)
 		            {
-			        	newPop += .1; 
+			        	newPop -= currPop/4; 
 		            }
                     var tiles = that.Map.getNeightbors(x,y);
 	    			
-		    		if (currPop < .7 && currPop > 0)
+		    		if (currPop < .5 && currPop > 0)
 		    		{
 			    		newPop += .1;
 		    		}
@@ -341,17 +341,17 @@ function Game() {
 		    		for (tile in tiles)
 		    		{
 			    		sum += tiles[tile].population;
+			    		if (tiles[tile].type == 4 || tiles[tile].type < 3)
+			    		{
+				    		limit += .2;
+			    		}
 		    		}
 		    		
-		    		if (sum >= 2.5)
+		    		if (sum >= 2)
 		    		{
 			    		newPop -= .2;
 		    		}
-		    		var limit = .9;
-		    		if (currType == 4)
-		    		{
-			    		limit = 1.5;
-		    		}
+		    		
 		    		if (currPop >= limit)
 		    		{
 			    		newPop -= .2;
