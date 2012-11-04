@@ -110,7 +110,7 @@ function Map(tileArray)
             for (var y = camy; y < camy+mapy; y++)
             {
                 _canvasContext.drawImage(this.tiles[x][y].img, i*tile_size, j*tile_size);
-                _canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population + ")";
+                _canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population/1.5 + ")";
                 _canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
                 j++;
             }
@@ -310,7 +310,7 @@ function Game() {
 	    			
 	    			if (currPop > 1)
 	    			{
-		    			newPop -= currPop;
+		    			newPop -= currPop/2;
 	    			}
 	    			
 		    		if (currPop < .7 && currPop > 0)
