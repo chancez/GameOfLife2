@@ -368,6 +368,10 @@ function Game() {
 				    		limit += .2;
 				    		tiles[tile].life += Math.round(tiles[tile].population*10);
 			    		}
+			    		if (tiles[tile].type == 8 && currPop >= 1.5)
+			    		{
+				    		tiles[tile].setType(3);
+			    		}
 		    		}
 
 		    		if (sum >= 2)
