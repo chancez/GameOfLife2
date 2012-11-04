@@ -113,6 +113,17 @@ function Map(tileArray)
 			i++;
 		}
 	}
+
+    this.drawCord = function() {
+        var mouse_x = Math.floor(mousePos.x/32);
+        var mouse_y = Math.floor(mousePos.y/32);
+        var x_cord = mouse_x + camerax;
+        var y_cord = mouse_y + cameray;
+
+        _canvasContext.fillStyle = "yellow";
+        _canvasContext.font = "15px Arial";
+        _canvasContext.fillText("Pos: (" + x_cord + ", " + y_cord + ")", 10 , 470)
+    }
 }
 
 function TileArray()
@@ -258,6 +269,7 @@ function Game() {
 
     this.Draw = function () {
     	this.Map.drawMap();
+        this.Map.drawCord();
     }
 }
 
