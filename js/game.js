@@ -110,7 +110,7 @@ function Map(tileArray)
             for (var y = camy; y < camy+mapy; y++)
             {
                 _canvasContext.drawImage(this.tiles[x][y].img, i*tile_size, j*tile_size);
-                _canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population/1.5 + ")";
+                _canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population/2 + ")";
                 _canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
                 j++;
             }
@@ -198,7 +198,7 @@ function Game() {
 
     this.Initialize = function () {
         this.fps = 30;
-        this.DrawInterval = 10000/this.fps;
+        this.DrawInterval = 1000/this.fps;
         this.CheckMouseInterval = 5000/this.fps;
         var tileArray = new TileArray();
         this.Map = new Map(tileArray);
@@ -213,7 +213,7 @@ function Game() {
             mousePos= getMousePos(event);
             var x = Math.floor(mousePos.x/tile_size) + camerax;
             var y = Math.floor(mousePos.y/tile_size) + cameray;
-            if (that.Map.getTiles()[x][y].population < .9)
+            if (that.Map.getTiles()[x][y].population < .9 && that.Map.getTiles()[x][y].type > 2)
             {
                 that.Map.getTiles()[x][y].population += .1
             }
@@ -302,16 +302,20 @@ function Game() {
                 if (currType == 1 || currType == 2)
                 {
                     newPop -= currPop;
+                    newPop += .1;
                 }
                 else
                 {
-                    
+                	
+		            if (currType == 7 || currType == 5 || currType == 6)
+		            {
+		                newPop -= currPop/2;
+		            }
+		            if (currType == 4 && currPop > 0)
+		            {
+			        	newPop += .1; 
+		            }
                     var tiles = that.Map.getNeightbors(x,y);
-	    			
-	    			if (currPop > 1)
-	    			{
-		    			newPop -= currPop/2;
-	    			}
 	    			
 		    		if (currPop < .7 && currPop > 0)
 		    		{
@@ -343,8 +347,12 @@ function Game() {
 		    		{
 			    		newPop -= .2;
 		    		}
-
-		    		if (currPop >= .9)
+		    		var limit = .9;
+		    		if (currType == 4)
+		    		{
+			    		limit = 1.5;
+		    		}
+		    		if (currPop >= limit)
 		    		{
 			    		newPop -= .2;
 		    		}
@@ -363,7 +371,12 @@ function Game() {
             for (var y = 0; y < map_size; y++)
             {
                 that.Map.getTiles()[x][y].population += newPops[x][y];
+                if (that.Map.getTiles()[x][y].population < 0)
+                {
+	                that.Map.getTiles()[x][y].population = 0;
+                }
             }
+            
         }
 
     }
