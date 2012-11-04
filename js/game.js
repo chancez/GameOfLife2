@@ -288,7 +288,7 @@ function Game() {
 	    {
 	    	for (var y = 0; y < map_size; y++)
 	    	{
-	    		var newPop = 0;
+	    		var newPop = newPops[x][y];
 
 	    		// calculate the new population value of the tile x, y
 	    		
@@ -301,12 +301,13 @@ function Game() {
 	    		}
 	    		else
 	    		{
+	    			
 		    		if (currPop < .7 && currPop > 0)
 		    		{
 			    		newPop += .1;
 		    		}
 
-		    		if (currPop == .4)
+		    		if (currPop > .4)
 		    		{
 		    			var tiles = that.Map.getNeightbors(x,y);
 		    			for (tile in tiles)
@@ -316,7 +317,6 @@ function Game() {
 				    		{
 			    				if (tiles[tile].type != 1 && tiles[tile].type != 2)
 			    				{
-				    				console.log(tile);
 				    				newPops[tiles[tile].x][tiles[tile].y] += .1;
 				    			}
 				    		}
@@ -327,14 +327,13 @@ function Game() {
 		    		{
 			    		newPop -= .2;
 		    		}
+		    		
+		    		// end calculate
+		    		newPops[x][y] = newPop;
+		    	}
 
-
-	    		}
-
-
-	    		// end calculate
-	    		newPops[x][y] = newPop;
 	    	}
+	    	
 	    }
 
 
