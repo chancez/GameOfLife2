@@ -7,6 +7,9 @@ var mapy = 0;
 var camerax = 40;
 var cameray = 40;
 
+var PopScore = new Array();
+var popTotal = 0;
+
 images = {
  water_far: 'img/water_far.png',
  water_near: 'img/water_near.png',
@@ -138,7 +141,7 @@ function Map(tileArray)
         {
 	        y_cord = map_size -1;
         }
-        var popTotal = 0;
+		popTotal = 0;
         for (var x = 0; x < map_size; x++)
         {
 	        for (var y = 0; y < map_size; y++)
@@ -146,7 +149,7 @@ function Map(tileArray)
 		        popTotal += this.tiles[x][y].population;
 	        }
         }
-
+        
         /*
 _canvasContext.fillStyle = "#ffffe0";
         _canvasContext.font = "15px Arial";
@@ -225,6 +228,7 @@ function Game() {
     var that = this;
 
     this.Initialize = function () {
+    	this.turns = 0;
         this.fps = 30;
         this.DrawInterval = 1000/this.fps;
         this.CheckMouseInterval = 5000/this.fps;
@@ -307,7 +311,8 @@ function Game() {
     }
 
     this.Update = function () {
-
+        PopScore[this.turns] = popTotal;
+	    this.turns++;
         // SET RULES FOR NEW TILESET HERE
         var newPops = new Array();
         for (var i = 0; i < map_size; i++)
@@ -453,6 +458,11 @@ function gameInit() {
     _canvasContext = _canvas.getContext('2d');
 
     mousePos = {x: 0, y: 0};
+    
+    document.getElementById("makegraph").onmousedown = function()
+    {
+	   	
+    }
 
     myGame = new Game;
     myGame.Initialize();
