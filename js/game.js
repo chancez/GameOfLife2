@@ -112,7 +112,7 @@ function Game() {
 		var tileArray = new TileArray();
     	this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
-        this.Draw();
+        this.RunGameLoop();
 
     }
 
@@ -123,7 +123,7 @@ function Game() {
         this.GameLoop = setInterval(this.RunGameLoop, this.DrawInterval);
     }
 
-    this.RunGameLoop = function (game) {
+    this.RunGameLoop = function () {
         this.Update();
         this.Draw();
     }
@@ -143,5 +143,5 @@ function gameInit() {
 
     myGame = new Game;
     myGame.Initialize();
-
+    
 }
