@@ -306,34 +306,51 @@ function Game() {
                 else
                 {
                     
-                    if (currPop < .7 && currPop > 0)
-                    {
-                        newPop += .1;
-                    }
+                    var tiles = that.Map.getNeightbors(x,y);
+	    			
+	    			if (currPop > 1)
+	    			{
+		    			newPop -= currPop;
+	    			}
+	    			
+		    		if (currPop < .7 && currPop > 0)
+		    		{
+			    		newPop += .1;
+		    		}
+		    		
+		    		if (currPop > .4)
+		    		{
+		    			for (tile in tiles)
+		    			{
+				    		var chance = randRange(3);
+				    		if (chance == 0)
+				    		{
+			    				if (tiles[tile].type != 1 && tiles[tile].type != 2)
+			    				{
+				    				newPops[tiles[tile].x][tiles[tile].y] += .1;
+				    			}
+				    		}
+		    			}
+		    		}
+		    		
+		    		var sum = 0;
+		    		for (tile in tiles)
+		    		{
+			    		sum += tiles[tile].population;
+		    		}
+		    		
+		    		if (sum >= 2.5)
+		    		{
+			    		newPop -= .2;
+		    		}
 
-                    if (currPop > .4)
-                    {
-                        var tiles = that.Map.getNeightbors(x,y);
-                        for (tile in tiles)
-                        {
-                            var chance = randRange(3);
-                            if (chance == 0)
-                            {
-                                if (tiles[tile].type != 1 && tiles[tile].type != 2)
-                                {
-                                    newPops[tiles[tile].x][tiles[tile].y] += .1;
-                                }
-                            }
-                        }
-                    }
-
-                    if (currPop >= .9)
-                    {
-                        newPop -= .2;
-                    }
-                    
-                    // end calculate
-                    newPops[x][y] = newPop;
+		    		if (currPop >= .9)
+		    		{
+			    		newPop -= .2;
+		    		}
+		    		
+		    		// end calculate
+		    		newPops[x][y] = newPop;
                 }
 
             }
@@ -346,10 +363,6 @@ function Game() {
             for (var y = 0; y < map_size; y++)
             {
                 that.Map.getTiles()[x][y].population += newPops[x][y];
-                if (that.Map.getTiles()[x][y].population > 1)
-                {
-                    that.Map.getTiles()[x][y].population = 1;
-                }
             }
         }
 
