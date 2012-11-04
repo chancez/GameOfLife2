@@ -71,6 +71,21 @@ function Map(tileArray)
 	{
 		return this.tiles;
 	}
+	this.drawMap = function()
+	{		
+		var i = 0;
+		var j = 0;
+		for (var x = camerax; x < camerax+mapx; x++)
+		{
+			for (var y = cameray; y < cameray+mapy; y++)
+			{
+		    	_canvasContext.drawImage(this.tiles[x][y].getImage(), i*tile_size, j*tile_size);
+		    	j++;
+			}
+			j = 0;
+			i++;
+		}
+	}
 }
 
 function TileArray()
@@ -92,12 +107,10 @@ function Game() {
 	var width = document.getElementById("gameCanvas").getAttribute("width");
 	var height = document.getElementById("gameCanvas").getAttribute("height");
 
-	var tileArray = new TileArray();
-	this.Map = new Map(tileArray);
-
+	
     this.Initialize = function () {
-        var map = [];
-
+		var tileArray = new TileArray();
+    	this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
 
     }
@@ -119,7 +132,7 @@ function Game() {
     }
 
     this.Draw = function () {
-    // draw game frame
+    	this.Map.drawMap();
     }
 }
 
@@ -147,4 +160,6 @@ function gameInit() {
 
     myGame = new Game;
     myGame.Initialize();
+    
+    
 }
