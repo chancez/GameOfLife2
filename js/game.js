@@ -132,14 +132,6 @@ function Map(tileArray)
 
     this.getNeightbors = function(x,y) {
         var neighbors = {
-            "left": null,
-            "right": null,
-            "top": null,
-            "bottom": null,
-            "t_left": null,
-            "t_right": null,
-            "b_left": null,
-            "b_right": null
         }
 
         if (x != 0){
@@ -316,11 +308,23 @@ function Game() {
 
 		    		if (currPop > .4)
 		    		{
-			    		var chance = randRange(3);
-			    		if (chance == 0)
-			    		{
-			    			//derp
-			    		}
+		    			var tiles = that.Map.getNeightbors(x,y);
+		    			for (tile in tiles)
+		    			{
+				    		var chance = randRange(3);
+				    		if (chance == 0)
+				    		{
+			    				if (tiles[tile].type != 1 && tiles[tile].type != 2)
+			    				{
+				    				newPops[tiles[tile].x][tiles[tile].y] += .1;
+				    			}
+				    		}
+		    			}
+		    		}
+		    		
+		    		if (currPop >= .9)
+		    		{
+			    		newPop -= .2;
 		    		}
 
 
