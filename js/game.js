@@ -9,6 +9,10 @@ var cameray = 40;
 
 var PopScore = new Array();
 var popTotal = 0;
+var maxPop = 0;
+
+var width;
+var height;
 
 images = {
  water_far: 'img/water_far.png',
@@ -149,6 +153,10 @@ function Map(tileArray)
 		        popTotal += this.tiles[x][y].population;
 	        }
         }
+        if (popTotal > maxPop)
+        {
+	        maxPop = popTotal;
+        }
         
         /*
 _canvasContext.fillStyle = "#ffffe0";
@@ -222,8 +230,8 @@ function TileArray()
 }
 
 function Game() {
-    var width = document.getElementById("gameCanvas").getAttribute("width");
-    var height = document.getElementById("gameCanvas").getAttribute("height");
+    width = document.getElementById("gameCanvas").getAttribute("width");
+    height = document.getElementById("gameCanvas").getAttribute("height");
 
     var that = this;
 
@@ -449,6 +457,12 @@ function Game() {
         this.Map.drawMap();
         this.Map.drawCord();
     }
+    
+    this.stop = function()
+    {
+	   	window.clearInterval(this.GameLoop);
+	   	window.clearInterval(this.CheckMouseLoop);
+    }
 }
 
 function gameInit() {
@@ -458,14 +472,23 @@ function gameInit() {
     _canvasContext = _canvas.getContext('2d');
 
     mousePos = {x: 0, y: 0};
-    
-    //document.getElementById("makegraph").onmousedown = function()
-    //{
-	   //	
-    //}
 
     myGame = new Game;
     myGame.Initialize();
+    
+    document.getElementById("makegraph").onmousedown = function()
+    {
+    	myGame.stop();
+    	_canvasContext.fillStyle = "#FFF";
+    	_canvasContext.fillRect(0, 0, width, height);
+    	_canvasContext.beginPath();
+    	for (var i = 1; i <= width; i++)
+    	{
+    		var y = height - PopScore[Math.round(i*myGame.turns/width)] * height/maxPop;
+	    	_canvasContext.lineTo(i, y);
+    	}
+    	_canvasContext.stroke();
+    }
 
 }
 
