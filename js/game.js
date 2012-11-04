@@ -1,5 +1,11 @@
-var map_size = 5;
+var map_size = 100;
 var tile_size = 32;
+
+var mapx = 20;
+var mapy = 15;
+
+var camerax = 0;
+var cameray = 0;
 
 function Tile(x, y, type)
 {
@@ -9,10 +15,28 @@ function Tile(x, y, type)
 	switch(type)
 	{
 		case 1:
-			this.imagePath = 'img/water.png';
+			this.imagePath = 'img/water_far.png';
 			break;
 		case 2:
+			this.imagePath = 'img/water_near.png';
+			break;
+		case 3:
 			this.imagePath = 'img/grass.png';
+			break;
+		case 4:
+			this.imagePath = 'img/forest.png';
+			break;
+		case 5:
+			this.imagePath = 'img/mountains.png';
+			break;
+		case 6:
+			this.imagePath = 'img/mountains_snow.png';
+			break;
+		case 7:
+			this.imagePath = 'img/sand.png';
+			break;
+		case 8:
+			this.imagePath = 'img/wasteland.png';
 			break;
 	}	
 	this.getImage = function()
@@ -29,12 +53,12 @@ function Map(tileArray)
 	this.tiles = new Array();
 	this.initMap = function(map_size)
 	{
-		for (i = 0; i < map_size; i++)
+		for (var i = 0; i < map_size; i++)
 		{
 			var tileRow = new Array();
-			for (j = 0; j < map_size; j++)
+			for (var j = 0; j < map_size; j++)
 			{
-				tileRow[j] = new Tile(i, j, 1);
+				tileRow[j] = new Tile(i, j, tileArray[i][j]);
 			}
 			this.tiles[i] = tileRow;
 		}
@@ -49,11 +73,26 @@ function Map(tileArray)
 	}
 }
 
+function TileArray()
+{
+	//generate the map here
+	var rows = new Array();
+	for (var i = 0; i < map_size; i++)
+	{
+		rows[i] = new Array();
+		for (var j = 0; j < map_size; j++)
+		{
+			rows[i][j] = Math.floor((Math.random()*8)+1);
+		}
+	}
+	return rows;
+}
+
 function Game() {
 	var width = document.getElementById("gameCanvas").getAttribute("width");
 	var height = document.getElementById("gameCanvas").getAttribute("height");
 
-	var tileArray = new Array();
+	var tileArray = new TileArray();
 	this.Map = new Map(tileArray);
 
     this.Initialize = function () {
@@ -92,12 +131,17 @@ function gameInit() {
     myGame.Initialize();
     
 	var tiles = myGame.Map.getTiles();
-	for (x in tiles)
+	var i = 0;
+	var j = 0;
+	for (var x = camerax; x < camerax+mapx; x++)
 	{
-    	for (y in tiles[x])
+    	for (var y = cameray; y < cameray+mapy; y++)
     	{
-	    	_canvasContext.drawImage(tiles[x][y].getImage(), x*tile_size, y*tile_size);
+	    	_canvasContext.drawImage(tiles[x][y].getImage(), i*tile_size, j*tile_size);
+	    	j++;
     	}
+    	j = 0;
+    	i++;
 	}
 
 
