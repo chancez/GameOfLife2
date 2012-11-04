@@ -548,39 +548,19 @@ function updateSand(rows) {
     var mountainSnowID = 6;
     var sandID = 7;
 
-
     //water to sand
-    for (var y = 0; y < map_size; y++) {
-        for (var x = 0; x < map_size; x++) {
-            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) {
-                if (checkSurround(rows, x, y, waterID, 3)) {
+    for (var y = 0; y < map_size; y++) 
+        for (var x = 0; x < map_size; x++) 
+            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) 
+                if (checkSurround(rows, x, y, waterID, 3)) 
                     rows[x][y] = sandID;
-                }
-            }
-        }
-    }
 
-    //Cleans out weird loner Sands
-    for (var y = 0; y < map_size; y++) {
-        for (var x = 0; x < map_size; x++) {
-            if (rows[x][y] === sandID) {
-                if (checkSurround(rows, x, y, waterID, 5)) {
-                    rows[x][y] = waterNearID;
-                }
-            }
-        }
-    }
-
-    //Cleans out weird loner sands even more
-    for (var y = 0; y < map_size; y++) {
-        for (var x = 0; x < map_size; x++) {
-            if (rows[x][y] === sandID) {
-                if (checkSurround(rows, x, y, waterID, 7)) {
-                    rows[x][y] = waterNearID;
-                }
-            }
-        }
-    }
+    //Changes mountain to snowy is surrounded by a certain amount of mountains
+    for (var y = 0; y < map_size; y++)
+        for (var x = 0; x < map_size; x++)
+            if (rows[x][y] === mountainID)
+                if (checkSurround(rows, x, y, mountainID, 6))
+                    rows[x][y] = mountainSnowID;
 
     for (var y = 0; y < map_size; y++)  // Sets water to waterNear if its suppose to be     <------------------------------------------------
         for (var x = 0; x < map_size; x++)
