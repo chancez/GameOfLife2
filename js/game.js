@@ -517,13 +517,18 @@ function gameInit() {
     		var y = height - PopScore[Math.round(i*myGame.turns/width)] * height/maxPop;
 	    	_canvasContext.lineTo(i, y);
     	}
+    	_canvasContext.lineTo(width, height);
+    	_canvasContext.lineTo(0, height);
+    	_canvasContext.fill();
     	_canvasContext.stroke();
+    
     }
     document.getElementById("restart").onmousedown = function () {
         myGame.stop();
         numClicks = 0;
         maxPop = 0;
         myGame.Initialize();
+        minimap(myGame.Map);
     };
 
 }
