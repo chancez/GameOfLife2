@@ -245,7 +245,7 @@ function Game() {
         {
 	        y = 0;
         }
-        console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
+        //console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
         if (camerax < map_size-mapx && x > mapx - 2){// - 2*tile_size:
             camerax += 1;
@@ -321,7 +321,7 @@ function Game() {
 				    		}
 		    			}
 		    		}
-		    		
+
 		    		if (currPop >= .9)
 		    		{
 			    		newPop -= .2;
