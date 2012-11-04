@@ -9,6 +9,12 @@ var cameray = 40;
 
 var PopScore = new Array();
 var popTotal = 0;
+var maxPop = 0;
+
+var width;
+var height;
+
+var numClicks = 0;
 
 images = {
  water_far: 'img/water_far.png',
@@ -149,6 +155,10 @@ function Map(tileArray)
 		        popTotal += this.tiles[x][y].population;
 	        }
         }
+        if (popTotal > maxPop)
+        {
+	        maxPop = popTotal;
+        }
         
         /*
 _canvasContext.fillStyle = "#ffffe0";
@@ -156,9 +166,10 @@ _canvasContext.fillStyle = "#ffffe0";
         _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
         ", Total Population: " + Math.round(popTotal)
         , 10 , 470)
-*/
+*/	
+		var poop = 3 - numClicks;
 		document.getElementById("gameText").innerHTML = ("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
-        ", Total Population: " + Math.round(popTotal));
+        ", Total Population: " + Math.round(popTotal)) + ", # Clicks Remaining: " + poop;
     }
 
     this.getNeightbors = function(x,y) {
@@ -222,8 +233,8 @@ function TileArray()
 }
 
 function Game() {
-    var width = document.getElementById("gameCanvas").getAttribute("width");
-    var height = document.getElementById("gameCanvas").getAttribute("height");
+    width = document.getElementById("gameCanvas").getAttribute("width");
+    height = document.getElementById("gameCanvas").getAttribute("height");
 
     var that = this;
 
@@ -242,13 +253,17 @@ function Game() {
 
         _canvas.onmousedown = function(event)
         {
-            mousePos= getMousePos(event);
-            var x = Math.floor(mousePos.x/tile_size) + camerax;
-            var y = Math.floor(mousePos.y/tile_size) + cameray;
-            if (that.Map.getTiles()[x][y].population < .9 && that.Map.getTiles()[x][y].type > 2)
-            {
-                that.Map.getTiles()[x][y].population += .1
-            }
+        	if (numClicks < 3)
+        	{
+	            mousePos= getMousePos(event);
+	            var x = Math.floor(mousePos.x/tile_size) + camerax;
+	            var y = Math.floor(mousePos.y/tile_size) + cameray;
+	            if (that.Map.getTiles()[x][y].population < .9 && that.Map.getTiles()[x][y].type > 2)
+	            {
+	                that.Map.getTiles()[x][y].population += .1
+	            }
+	        	numClicks++;
+	        }
         }
 
         var doKeyDown = function(event) {
@@ -449,6 +464,12 @@ function Game() {
         this.Map.drawMap();
         this.Map.drawCord();
     }
+    
+    this.stop = function()
+    {
+	   	window.clearInterval(this.GameLoop);
+	   	window.clearInterval(this.CheckMouseLoop);
+    }
 }
 
 function gameInit() {
@@ -458,14 +479,22 @@ function gameInit() {
     _canvasContext = _canvas.getContext('2d');
 
     mousePos = {x: 0, y: 0};
-    
-   // document.getElementById("makegraph").onmousedown = function()
-    //{
-	   	
-    //}
 
     myGame = new Game;
     myGame.Initialize();
+    document.getElementById("makegraph").onmousedown = function()
+    {
+    	myGame.stop();
+    	_canvasContext.fillStyle = "#FFF";
+    	_canvasContext.fillRect(0, 0, width, height);
+    	_canvasContext.beginPath();
+    	for (var i = 1; i <= width; i++)
+    	{
+    		var y = height - PopScore[Math.round(i*myGame.turns/width)] * height/maxPop;
+	    	_canvasContext.lineTo(i, y);
+    	}
+    	_canvasContext.stroke();
+    }
 
 }
 
@@ -590,20 +619,25 @@ function updateSand(rows) {
     var mountainID = 5;
     var mountainSnowID = 6;
     var sandID = 7;
+    var snowyMount = randRange(map_size);
 
     //water to sand
-    for (var y = 0; y < map_size; y++)
-        for (var x = 0; x < map_size; x++)
-            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID)
-                if (checkSurround(rows, x, y, waterID, 3))
+    for (var y = 0; y < map_size; y++) 
+        for (var x = 0; x < map_size; x++) 
+            if (rows[x][y] === landID || rows[x][y] === forestID || rows[x][y] === mountainID) 
+                if (checkSurround(rows, x, y, waterID, 3)) 
                     rows[x][y] = sandID;
 
     //Changes mountain to snowy is surrounded by a certain amount of mountains
     for (var y = 0; y < map_size; y++)
         for (var x = 0; x < map_size; x++)
-            if (rows[x][y] === mountainID)
-                if (checkSurround(rows, x, y, mountainID, 6))
-                    rows[x][y] = mountainSnowID;
+            if (rows[x][y] === mountainID) {
+
+                snowyMount = randRange(map_size);
+
+                if (checkSurroundWithException(rows, x, y, mountainID, mountainSnowID, 8) && snowyMount > 33)
+                    rows[x][y] = mountainSnowID;//tileFlood(x, y, 75, 25, mountainSnowID, rows);
+            }
 
     for (var y = 0; y < map_size; y++)  // Sets water to waterNear if its suppose to be     <------------------------------------------------
         for (var x = 0; x < map_size; x++)
@@ -675,7 +709,67 @@ function checkSurround(rows, x, y, chosenID, limit){    // Used to check is a ti
         }
 }
 
+function checkSurroundWithException(rows, x, y, chosenID, dontCareID,  limit){    // Used to check is a tile is being touched by at least X amounts of A tiles
 
+    var howManyWater = 0;
+
+        if ((x + 1) < map_size){    // ONE
+            if (rows[x + 1][y] === chosenID || rows[x + 1][y] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if((x - 1) >= 0){   //  TWO
+            if(rows[x - 1][y] === chosenID || rows[x - 1][y] === dontCareID)
+            {
+                howManyWater++;
+            }
+        }
+
+        if ((x - 1) >= 0 && (y - 1) > 0) {   // THREE
+            if (rows[x - 1][y - 1] === chosenID || rows[x - 1][y - 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if((y - 1) >= 0) {  // FOUR
+            if(rows[x][y - 1] === chosenID || rows[x][y - 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((x + 1) < map_size && (y - 1) > 0) {    // FIVE
+            if (rows[x + 1][y - 1] === chosenID || rows[x + 1][y - 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((x - 1) >= 0 && (y + 1) < map_size) {    // SIX
+            if (rows[x - 1][y + 1] === chosenID | rows[x - 1][y + 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((y + 1) < map_size) {   // SEVEN
+            if (rows[x][y + 1] === chosenID || rows[x][y + 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if ((x + 1) < map_size && (y + 1) < map_size) { // EIGHT
+            if (rows[x + 1][y + 1] === chosenID || rows[x + 1][y + 1] === dontCareID) {
+                howManyWater++;
+            }
+        }
+
+        if (howManyWater >= limit) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+}
 //checks if is land or not
 var isLand = function (posX,posY,rows) {
     if (rows[posX][posY] === 3) {
