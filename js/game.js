@@ -149,18 +149,18 @@ function Game() {
 
         console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
-        if (camerax < mapx && x > mapx - 2){// - 2*tile_size:
+        if (x < mapx && x > mapx - 2){// - 2*tile_size:
             camerax += 1;
         }
-        if (camerax > 0 && x < 2)
+        if (x> 0 && x < 2)
         {
 	        camerax -= 1;
         }
-        if (cameray < mapy && y > mapy-2)
+        if (y < mapy && y > mapy-2)
         {
 	        cameray += 1;
         }
-        if (cameray > 0 && y < 2)
+        if (y > 0 && y < 2)
         {
 	        cameray -= 1;
         }
