@@ -7,6 +7,7 @@ strong {
 }
 #page {
     font-size: 1.45em;
+    p.sansserif{font-family:Arial,Helvetica,sans-serif;};
 }
 #description {
     margin-left: auto;
@@ -19,7 +20,7 @@ strong {
     border: 3px solid black;
     border-radius: 20px;
     height: 100%;
-    background-color: #fff;
+    background-color: #FFFFFF;
     padding-left: 14px;
 }
 #devs {
@@ -31,6 +32,6 @@ strong {
     border: 3px solid black;
     border-radius: 20px;
     height: 100%;
-    background-color: #fff;
+    background-color: #FFFFFF;
     padding-left: 14px;
 }
