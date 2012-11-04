@@ -115,12 +115,13 @@ function Game() {
     this.Initialize = function () {
         this.fps = 30;
         this.DrawInterval = 1000/this.fps;
+        this.CheckMouseInterval = 7500/this.fps;
 		var tileArray = new TileArray();
         this.Map = new Map(tileArray);
         this.Map.initMap(map_size);
 
         _canvas.addEventListener('mousemove', function(event) {
-            mousePos= getMousePos(_canvas, event);
+            mousePos= getMousePos(event);
         }, false);
 
         this.LoadContent();
@@ -132,28 +133,41 @@ function Game() {
     // since all content is loaded run main game loop
     // Calls RunGameLoop method every ‘draw interval’
         this.GameLoop = setInterval(this.RunGameLoop, this.DrawInterval);
+        this.CheckMouseLoop = setInterval(this.checkMouse, this.CheckMouseInterval);
     }
 
     this.RunGameLoop = function () {
         that.Update();
         that.Draw();
     }
-
-    this.Update = function () {
+    
+    this.checkMouse = function()
+    {
     // update game variables, handle user input, perform calculations etc.
         var x = Math.floor(mousePos.x/32);
-        var y = mousePos.y;
+        var y = Math.floor(mousePos.y/32);
 
         console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
-        if (x > mapx - 2){// - 2*tile_size:
-            camerax += .5;
+        if (camerax < mapx && x > mapx - 2){// - 2*tile_size:
+            camerax += 1;
         }
-
-        switch(y)
+        if (camerax > 0 && x < 2)
         {
-
+	        camerax -= 1;
         }
+        if (cameray < mapy && y > mapy-2)
+        {
+	        cameray += 1;
+        }
+        if (cameray > 0 && y < 2)
+        {
+	        cameray -= 1;
+        }
+	    that.Draw();
+    }
+
+    this.Update = function () {
     }
 
     this.Draw = function () {
