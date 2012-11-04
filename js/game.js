@@ -50,6 +50,7 @@ function Tile(x, y, type)
     this.population = 0;
     this.setType = function(newType)
     {
+    	this.life = 1000;
 	    this.type = newType;
 	    this.img = function(type){
         switch(type)
@@ -311,8 +312,12 @@ function Game() {
                 
                 var currType = that.Map.getTiles()[x][y].type;
                 var currPop = that.Map.getTiles()[x][y].population;
-
-                if (currType == 1 || currType == 2)
+                
+                if (that.Map.getTiles()[x][y].life <= 0 && currType != 8)
+                {
+	                that.Map.getTiles()[x][y].setType(8);
+                }
+                else if (currType == 1 || currType == 2)
                 {
                     newPop -= currPop;
                     newPop += .1;
@@ -323,6 +328,10 @@ function Game() {
 		            if (currType == 7 || currType == 5 || currType == 6)
 		            {
 		                newPop -= currPop/2;
+		            }
+		            if (currType == 8)
+		            {
+			            newPop -= currPop*2;
 		            }
 		            if (currType == 4 && currPop > 1.5)
 		            {
@@ -357,6 +366,7 @@ function Game() {
 			    		if (tiles[tile].type == 4 || tiles[tile].type < 3)
 			    		{
 				    		limit += .2;
+				    		tiles[tile].life += 1;
 			    		}
 		    		}
 		    		
@@ -384,10 +394,15 @@ function Game() {
             for (var y = 0; y < map_size; y++)
             {
                 that.Map.getTiles()[x][y].population += newPops[x][y];
+	            that.Map.getTiles()[x][y].life -= newPops[x][y];
                 if (that.Map.getTiles()[x][y].population < 0)
                 {
 	                that.Map.getTiles()[x][y].population = 0;
                 }
+                if (that.Map.getTiles()[x][y].life > 0)
+                {
+	            	that.Map.getTiles()[x][y].life -= that.Map.getTiles()[x][y].population;
+	            }
             }
             
         }
