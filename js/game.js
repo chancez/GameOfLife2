@@ -260,6 +260,15 @@ function Game() {
 			    		newPop += .1;
 		    		}
 		    		
+		    		if (currPop > .4)
+		    		{
+			    		var chance = randRange(3);
+			    		if (chance == 0)
+			    		{
+			    			//derp
+			    		}
+		    		}
+		    		
 		    		
 	    		}
 	    		
