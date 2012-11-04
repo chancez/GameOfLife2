@@ -50,7 +50,7 @@ function Tile(x, y, type)
     this.population = 0;
     this.setType = function(newType)
     {
-    	this.life = 200;
+    	this.life = 1000;
 	    this.type = newType;
 	    this.img = function(type){
         switch(type)
@@ -116,7 +116,7 @@ function Map(tileArray)
             for (var y = camy; y < camy+mapy; y++)
             {
                 _canvasContext.drawImage(this.tiles[x][y].img, i*tile_size, j*tile_size);
-                _canvasContext.fillStyle = "rgba(255, 0 , 0, " + this.tiles[x][y].population/2 + ")";
+                _canvasContext.fillStyle = "rgba(255, 165 , 0, " + this.tiles[x][y].population/2 + ")";
                 _canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
                 j++;
             }
