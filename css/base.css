@@ -13,7 +13,6 @@ div.gameArea
 	color:black;
 	font-weight:bold;
 	width:896px;
-	display: relative;
 }
 
 div#logodiv
@@ -28,7 +27,6 @@ div#minimap
 
 canvas#gameCanvas
 {
-	position:absolute;
 	border: 1px solid black;
 	padding-left: 0;
 	padding-right: 0;
