@@ -1,6 +1,10 @@
 body {
     font-size: 2.5em;
-    background-color: #f00; 
+    background-color: #ffffff; 
+  background-image: url('../img/background2.png');
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 #top {
     padding-bottom: 10px;
@@ -15,7 +19,7 @@ body {
 #content {
     margin-left: auto;
     margin-right: auto; 
-    width: 1000px;
+    width: 350px;
     list-style-type: none;
     line-height: 1.45em;
     border: 3px solid black;
