@@ -48,7 +48,10 @@ function Tile(x, y, type)
     this.y = y;
     this.type = type;
     this.population = 0;
-    this.img = function(type){
+    this.setType = function(newType)
+    {
+	    this.type = newType;
+	    this.img = function(type){
         switch(type)
         {
             case 1:
@@ -68,7 +71,9 @@ function Tile(x, y, type)
             case 8:
                 return wasteland;
         }
-    }(type);
+    }(newType);
+    }
+    this.setType(type);
 
 }
 
@@ -124,6 +129,14 @@ function Map(tileArray)
         var mouse_y = Math.floor(mousePos.y/32);
         var x_cord = mouse_x + camerax;
         var y_cord = mouse_y + cameray;
+        if (x_cord > map_size-1)
+        {
+	        x_cord = map_size -1;
+        }
+        if (y_cord > map_size-1)
+        {
+	        y_cord = map_size -1;
+        }
 
         _canvasContext.fillStyle = "yellow";
         _canvasContext.font = "15px Arial";
@@ -311,9 +324,9 @@ function Game() {
 		            {
 		                newPop -= currPop/2;
 		            }
-		            if (currType == 4 && currPop > 0)
+		            if (currType == 4 && currPop > 1.5)
 		            {
-			        	newPop -= currPop/4; 
+			        	that.Map.tiles[x][y].setType(3);
 		            }
                     var tiles = that.Map.getNeightbors(x,y);
 	    			
