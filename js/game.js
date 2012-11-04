@@ -166,9 +166,10 @@ _canvasContext.fillStyle = "#ffffe0";
         _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
         ", Total Population: " + Math.round(popTotal)
         , 10 , 470)
-*/
+*/	
+		var poop = 3 - numClicks;
 		document.getElementById("gameText").innerHTML = ("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
-        ", Total Population: " + Math.round(popTotal));
+        ", Total Population: " + Math.round(popTotal)) + ", # Clicks Remaining: " + poop;
     }
 
     this.getNeightbors = function(x,y) {
