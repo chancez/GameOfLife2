@@ -6,6 +6,7 @@
 
 div.gameArea
 {
+	position:absolute;
 	margin-left:auto;
 	margin-right:auto;
 	text-align: left;
@@ -13,7 +14,6 @@ div.gameArea
 	color:black;
 	font-weight:bold;
 	width:896px;
-	display: relative;
 }
 
 div#logodiv
