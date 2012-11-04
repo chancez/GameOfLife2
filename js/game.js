@@ -127,7 +127,7 @@ function Map(tileArray)
 
         _canvasContext.fillStyle = "yellow";
         _canvasContext.font = "15px Arial";
-        _canvasContext.fillText("Pos: (" + x_cord + ", " + y_cord + ")", 10 , 470)
+        _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Population: " + Math.round(this.tiles[x_cord][y_cord].population*10), 10 , 470)
     }
 
     this.getNeightbors = function(x,y) {
@@ -217,7 +217,10 @@ function Game() {
 	        mousePos= getMousePos(event);
 	        var x = Math.floor(mousePos.x/tile_size) + camerax;
 	        var y = Math.floor(mousePos.y/tile_size) + cameray;
-	        that.Map.getTiles()[x][y].population += .1;
+	        if (that.Map.getTiles()[x][y].population < .9)
+	        {
+	       	 	that.Map.getTiles()[x][y].population += .1
+	       	}
         }
 
         this.LoadContent();
@@ -298,18 +301,28 @@ function Game() {
 	    		// to get tile x,y population: that.Map.getTiles()[x][y].population
 	    		// to get tile x,y type: that.Map.getTiles()[x][y].type
 	    		var currType = that.Map.getTiles()[x][y].type;
+		    	var currPop = that.Map.getTiles()[x][y].population;
 
 	    		if (currType == 1 || currType == 2)
 	    		{
+	    			newPop += -1* currPop;
 	    		}
 	    		else
 	    		{
-		    		var currPop = that.Map.getTiles()[x][y].population;
-
-		    		if (currPop < .7)
+		    		if (currPop < .7 && currPop > 0)
 		    		{
 			    		newPop += .1;
 		    		}
+
+		    		if (currPop > .4)
+		    		{
+			    		var chance = randRange(3);
+			    		if (chance == 0)
+			    		{
+			    			//derp
+			    		}
+		    		}
+
 
 	    		}
 
