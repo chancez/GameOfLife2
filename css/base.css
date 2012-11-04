@@ -4,16 +4,22 @@
   display:inline;
 }
 
+div.left
+{
+	display:inline;
+	float:left;
+}
+
 div.gameArea
 {
-	position:absolute;
+	position:relative;
 	margin-left:auto;
 	margin-right:auto;
-	text-align: left;
 	font-family: Arial;
 	color:black;
 	font-weight:bold;
 	width:896px;
+	display:inline;
 }
 
 div#logodiv
@@ -28,6 +34,7 @@ div#minimap
 
 canvas#gameCanvas
 {
+	position:relative;
 	border: 1px solid black;
 	padding-left: 0;
 	padding-right: 0;
