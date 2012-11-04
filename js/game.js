@@ -459,10 +459,10 @@ function gameInit() {
 
     mousePos = {x: 0, y: 0};
     
-    document.getElementById("makegraph").onmousedown = function()
-    {
+   // document.getElementById("makegraph").onmousedown = function()
+    //{
 	   	
-    }
+    //}
 
     myGame = new Game;
     myGame.Initialize();
