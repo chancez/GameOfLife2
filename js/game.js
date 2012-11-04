@@ -16,6 +16,8 @@ var height;
 
 var numClicks = 0;
 
+var highestPop = 0;
+
 images = {
  water_far: 'img/water_far.png',
  water_near: 'img/water_near.png',
@@ -156,42 +158,41 @@ function Map(tileArray)
         }
     }
 
-    this.drawCord = function() {
-        var mouse_x = Math.floor(mousePos.x/32);
-        var mouse_y = Math.floor(mousePos.y/32);
+    this.drawCord = function () {
+        var mouse_x = Math.floor(mousePos.x / 32);
+        var mouse_y = Math.floor(mousePos.y / 32);
         var x_cord = mouse_x + camerax;
         var y_cord = mouse_y + cameray;
-        if (x_cord > map_size-1)
-        {
-	        x_cord = map_size -1;
+        if (x_cord > map_size - 1) {
+            x_cord = map_size - 1;
         }
-        if (y_cord > map_size-1)
-        {
-	        y_cord = map_size -1;
+        if (y_cord > map_size - 1) {
+            y_cord = map_size - 1;
         }
-		popTotal = 0;
-        for (var x = 0; x < map_size; x++)
-        {
-	        for (var y = 0; y < map_size; y++)
-	        {
-		        popTotal += this.tiles[x][y].population;
-	        }
+        popTotal = 0;
+        for (var x = 0; x < map_size; x++) {
+            for (var y = 0; y < map_size; y++) {
+                popTotal += this.tiles[x][y].population;
+            }
         }
-        if (popTotal > maxPop)
-        {
-	        maxPop = popTotal;
+        if (popTotal > maxPop) {
+            maxPop = popTotal;
         }
-        
+
         /*
-_canvasContext.fillStyle = "#ffffe0";
+        _canvasContext.fillStyle = "#ffffe0";
         _canvasContext.font = "15px Arial";
         _canvasContext.fillText("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
         ", Total Population: " + Math.round(popTotal)
         , 10 , 470)
-*/	
-		var poop = 3 - numClicks;
-		document.getElementById("gameText").innerHTML = ("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population*10) + 
+        */
+   
+        var poop = 3 - numClicks;
+        document.getElementById("gameText").innerHTML = ("Position: (" + x_cord + ", " + y_cord + "), Tile Population: " + Math.round(this.tiles[x_cord][y_cord].population * 10) + " ,Highest Pop Attained: " + highestPop +
         ", Total Population: " + Math.round(popTotal)) + ", # Clicks Remaining: " + poop;
+
+        if(Math.round(popTotal) > highestPop)
+            highestPop = Math.round(popTotal); 
     }
 
     this.getNeightbors = function(x,y) {
