@@ -13,6 +13,7 @@ div.gameArea
 	color:black;
 	font-weight:bold;
 	width:896px;
+	display: relative;
 }
 
 div#logodiv
@@ -22,7 +23,7 @@ div#logodiv
 
 div#minimap
 {
-	display:inline-block;
+	display:inline;
 }
 
 canvas#gameCanvas
@@ -33,7 +34,6 @@ canvas#gameCanvas
 	margin-left: auto;
 	margin-right: auto;
 	display: relative;
-
 }
 
 body
