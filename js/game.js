@@ -50,6 +50,28 @@ function Tile(x, y, type)
     this.x = x;
     this.y = y;
     this.type = type;
+    this.color = function(type)
+    {
+        switch (type)
+        {
+            case 1:
+                return "blue";
+            case 2:
+                return "teal";
+            case 3:
+                return "green";
+            case 4:
+                return "darkgreen";
+            case 5:
+                return "grey";
+            case 6:
+                return "silver";
+            case 7:
+                return "yellow";
+            case 8:
+                return "brown";
+        }
+    }(type);
     this.population = 0;
     this.setType = function(newType)
     {
@@ -466,6 +488,7 @@ function gameInit() {
 
     myGame = new Game;
     myGame.Initialize();
+    minimap(myGame.Map);
 
 }
 
@@ -694,7 +717,7 @@ function snowyMount() { //supposed to add s mountains, but is not working yet, n
         for(var j = 0; j < map_size; j++) {
 
             if(rows[i][j] === 5){
-                neighbors = Map.getNeighbors[i][j];
+                neighbors = Map.getNeightbors[i][j];
                 for(var k = 0; k < 8; k++) {
                     if(neighbors.t_left.type === 5)
                         mount++;
@@ -720,3 +743,29 @@ function snowyMount() { //supposed to add s mountains, but is not working yet, n
         }
     }
 }
+
+function minimap(map) {
+
+    var minimap = document.getElementById('minimap');
+    var mapCxt = minimap.getContext('2d');
+    var xAxis = 0;
+    var yAxis = 0;
+
+    var minis = new Array();
+    for (var i = 0; i < map_size; i++) {
+        minis[i] = new Array();
+        
+        for(var j = 0; j < map_size; j++) {
+            mapCxt.fillStyle = map.tiles[i][j].color;
+            console.log(map.tiles[i][j].color);
+            mapCxt.fillRect(xAxis+=2,yAxis,2,2);
+        }
+       xAxis-=200;
+       yAxis+=2;
+    }
+}
+
+
+
+
+
