@@ -1,4 +1,3 @@
-// globals
 var map_size = 100;
 var tile_size = 32;
 
@@ -53,8 +52,6 @@ sand.src = images.sand;
 
 wasteland = new Image();
 wasteland.src = images.wasteland;
-
-//globals end
 
 function Game() {
     width = document.getElementById("gameCanvas").getAttribute("width");
@@ -245,7 +242,7 @@ function Game() {
 			    		}
 		    		}
 
-		    		if (sum >= 4)
+		    		if (sum >= 3)
 		    		{
 			    		newPop -= .1;
 		    		}
