@@ -17,21 +17,21 @@
 </head>
 <body onload="gameInit();">
 <center>
-<div id="logodiv">
-  <canvas id='minimap' width='200' height='200'></canvas>
-  <img id="logo" src="img/Logo.png" alt="Logo" width="538" height="276" />
-</div>
 </center>
 <center>
 <div class="left"></div>
-<div class="gameArea">
-  <canvas id="gameCanvas" width="896" height="640"></canvas>
+<div class="gameArea" id="gameArea">
+  <canvas id='minimap' width='200' height='200'></canvas>
+  <canvas id="gameCanvas"></canvas>
   <div id="gameText">test</div>
 <center><input type="submit" id="makegraph" value="Make a Graph"> &nbsp;&nbsp;&nbsp; <input type="submit" id="restart" value="Restart"></center><br />
 </div>
+
 </center>
-<p class="center">
-<a href="splash.html">HOME</a>
-</p>
+	<script>	
+        $("canvas#gameCanvas").attr('width', $(window).width()*.98);
+        $("canvas#gameCanvas").attr('height', $(window).height()*.9);
+		console.log($('body').height());
+	</script>
 </body>
 </html>

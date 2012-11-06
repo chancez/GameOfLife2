@@ -75,9 +75,9 @@ function Game()
         this.Map.initMap(map_size);
 		minimap(this.Map);
 
-        _canvas.addEventListener('mousemove', function(event) 
+      	 document.getElementById("gameArea").addEventListener('mousemove', function(event) 
 		{
-            mousePos= getMousePos(event);
+            mousePos = getMousePos(event);
         }, false);
 
         _canvas.onmousedown = function(event)
@@ -140,18 +140,18 @@ function Game()
         }
         //console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
-        if (camerax < map_size-mapx && x > mapx - 2){// - 2*tile_size:
+        if (camerax < map_size-mapx-1 && x > mapx - 2 && x <= mapx){// - 2*tile_size:
             camerax += 1;
         }
-        if (camerax > 0 && x < 2)
+        if (camerax > 0 && x < 2 && x >= 0)
         {
             camerax -= 1;
         }
-        if (cameray < map_size-mapy && y > mapy-2)
+        if (cameray < map_size-mapy-1 && y > mapy-2 && y <= mapy)
         {
             cameray += 1;
         }
-        if (cameray > 0 && y < 2)
+        if (cameray > 0 && y < 2 && y >= 0)
         {
             cameray -= 1;
         }
@@ -210,7 +210,7 @@ function Game()
 					}
 		            if (currType == 7 || currType == 5 || currType == 6)
 		            {
-		                newPop -= .1;
+		                limit = .2;
 		            }
 		            if (currType == 8)
 		            {
@@ -218,6 +218,7 @@ function Game()
 		            }
 		            if (currType == 4)
 		            {
+						limit = .3;
 						if (currBuilt >= randRange(500)+200)
 						{
 							that.Map.tiles[x][y].setType(3);
@@ -261,7 +262,7 @@ function Game()
 			    		if (tiles[tile].type == 4 || tiles[tile].type < 3)
 			    		{
 				    		limit += .01;
-				    		var chance = randRange(50000);
+				    		var chance = randRange(10000);
 				    		if (chance == 0 && currType == 3)
 				    		{
 								that.Map.getTiles()[x][y].setType(4);
@@ -287,7 +288,7 @@ function Game()
 						newPop += .01;
 					}
 					
-					if (citiesClose == 0 && currBuilt > 10000)
+					if (citiesClose == 0 && currBuilt > 10000 && currType != 5 && currType != 6)
 					{
 						that.Map.tiles[x][y].setType(9);
 					}

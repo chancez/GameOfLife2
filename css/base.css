@@ -18,18 +18,8 @@ div.gameArea
 	font-family: Arial;
 	color:black;
 	font-weight:bold;
-	width:896px;
-	display:inline;
-}
+	z-index:200;
 
-div#logodiv
-{
-	width:896px;
-}
-
-div#minimap
-{
-	display:inline;
 }
 
 canvas#gameCanvas
@@ -40,7 +30,15 @@ canvas#gameCanvas
 	padding-right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	display: relative;
+}
+
+canvas#minimap
+{
+	float:left;
+	position:absolute;
+	display:block;
+	z-index:100;
+	border: 1px solid black;
 }
 
 body
