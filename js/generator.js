@@ -281,22 +281,32 @@ var isLand = function (posX,posY,rows) {
     }
 }
 
-function minimap(map) {
-
+function minimap(map) 
+{
     var minimap = document.getElementById('minimap');
     var mapCxt = minimap.getContext('2d');
     var xAxis = 0;
     var yAxis = 0;
 
     var minis = new Array();
-    for (var i = 0; i < map_size; i++) {
+    for (var i = 0; i < map_size; i++)
+	{
         minis[i] = new Array();
         
-        for(var j = 0; j < map_size; j++) {
-            mapCxt.fillStyle = map.tiles[j][i].color;
-            mapCxt.fillRect(xAxis+=2,yAxis,2,2);
+        for(var j = 0; j < map_size; j++) 
+		{
+            mapCxt.fillStyle = map.getTiles()[j][i].color;
+            mapCxt.fillRect(xAxis,yAxis,2,2);
+			if (map.getTiles()[j][i].population >= 0.4)
+			{
+				mapCxt.fillStyle = "rgba(255, 165 , 0, " + map.getTiles()[j][i].population/1 + ")";
+           	 	mapCxt.fillRect(xAxis,yAxis,2,2);
+			}
+			xAxis+=2;
         }
        xAxis-=200;
        yAxis+=2;
     }
+	mapCxt.strokeStyle = "#000";
+	mapCxt.strokeRect(camerax*2, cameray*2, mapx*2, mapy*2);
 }

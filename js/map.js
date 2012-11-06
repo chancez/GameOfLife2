@@ -4,53 +4,70 @@ function Tile(x, y, type)
     this.y = y;
     this.type = type;
     this.population = 0;
-    this.color = function(type)
-    {
-        switch (type)
-        {
-            case 1:
-                return "blue";
-            case 2:
-                return "teal";
-            case 3:
-                return "green";
-            case 4:
-                return "darkgreen";
-            case 5:
-                return "grey";
-            case 6:
-                return "silver";
-            case 7:
-                return "yellow";
-            case 8:
-                return "brown";
-        }
-    }(type);
+	var that = this;
     this.setType = function(newType)
     {
     	this.life = 1000;
+		this.built = 0;
 	    this.type = newType;
-	    this.img = function(type){
-        switch(type)
-        {
-            case 1:
-                return water_far;
-            case 2:
-                return water_near;
-            case 3:
-                return grass;
-            case 4:
-                return forest;
-            case 5:
-                return mountain;
-            case 6:
-                return mountains_snow;
-            case 7:
-                return sand;
-            case 8:
-                return wasteland;
-        }
-    }(newType);
+		var that = this;
+	    this.img = function(type)
+		{
+			switch(type)
+			{
+				case 1:
+					that.resources = 500;
+					return water_far;
+				case 2:
+					that.resources = 500;
+					return water_near;
+				case 3:
+					that.resources = 200;
+					return grass;
+				case 4:
+					that.resources = 500;
+					return forest;
+				case 5:
+					that.resources = 300;
+					return mountain;
+				case 6:
+					that.resources = 300;
+					return mountains_snow;
+				case 7:
+					that.resources = 100;
+					return sand;
+				case 8:
+					that.resources = 0;
+					return wasteland;
+				case 9:
+					that.resources = 1000;
+					return city;
+        	}
+    	}(newType);
+		this.color = function(type)
+		{
+			switch (type)
+			{
+				case 1:
+					return "blue";
+				case 2:
+					return "teal";
+				case 3:
+					return "green";
+				case 4:
+					return "darkgreen";
+				case 5:
+					return "grey";
+				case 6:
+					return "silver";	
+				case 7:
+					return "yellow";
+				case 8:
+					return "brown";
+				case 9:
+					return "black";
+			}
+		}(newType);
     }
     this.setType(type);
 
@@ -94,7 +111,7 @@ function Map(tileArray)
             for (var y = camy; y < camy+mapy; y++)
             {
                 _canvasContext.drawImage(this.tiles[x][y].img, i*tile_size, j*tile_size);
-                _canvasContext.fillStyle = "rgba(255, 165 , 0, " + this.tiles[x][y].population/2 + ")";
+                _canvasContext.fillStyle = "rgba(255, 165 , 0, " + this.tiles[x][y].population/1 + ")";
                 _canvasContext.fillRect(i*tile_size, j*tile_size, tile_size, tile_size);
                 j++;
             }
