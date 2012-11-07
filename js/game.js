@@ -140,7 +140,8 @@ function Game()
         }
         //console.log("x: " + x + " y: " + y + " camerax: " + camerax + " cameray: " + cameray);
 
-        if (camerax < map_size-mapx-1 && x > mapx - 2 && x <= mapx){// - 2*tile_size:
+        if (camerax < map_size-mapx-1 && x > mapx - 2 && x <= mapx)
+        {
             camerax += 1;
         }
         if (camerax > 0 && x < 2 && x >= 0)
@@ -151,7 +152,7 @@ function Game()
         {
             cameray += 1;
         }
-        if (cameray > 0 && y < 2 && y >= 0)
+        if (cameray > 0 && y < 2 && y > 0)
         {
             cameray -= 1;
         }
@@ -355,6 +356,7 @@ function Game()
     {
 	   	window.clearInterval(this.GameLoop);
 	   	window.clearInterval(this.CheckMouseLoop);
+	   	$('canvas#minimap').hide();
     }
 }
 
@@ -370,20 +372,25 @@ function gameInit()
     myGame = new Game;
     myGame.Initialize();
     var poop = setInterval(minimap(myGame.Map), 500);
+    
     document.getElementById("makegraph").onmousedown = function()
     {
     	myGame.stop();
     	_canvasContext.fillStyle = "#FFF";
     	_canvasContext.fillRect(0, 0, width, height);
     	_canvasContext.beginPath();
+    	var x = 0;
     	for (var i = 1; i <= width; i++)
     	{
-    		var y = height - PopScore[Math.round(i*myGame.turns/width)] * height/maxPop;
-	    	_canvasContext.lineTo(i, y);
+    		y = height - PopScore[Math.round(i*myGame.turns/width)] * height/maxPop;
+    		x = i;
+	    	_canvasContext.lineTo(x, y);
     	}
-    	_canvasContext.lineTo(width, height);
-    	_canvasContext.lineTo(0, height);
+    	_canvasContext.lineTo(x, height);
+    	_canvasContext.closePath();
     	_canvasContext.stroke();
+    	_canvasContext.fillStyle = "#000";
+    	_canvasContext.fill();
     
     }
     document.getElementById("restart").onmousedown = function () 
@@ -395,6 +402,7 @@ function gameInit()
         minimap(myGame.Map);
 		canvasx = 40;
 		canvasy = 40;
+	   	$('canvas#minimap').show();
     };
 
 }

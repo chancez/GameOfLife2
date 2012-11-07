@@ -19,9 +19,10 @@
 <center>
 </center>
 <center>
-<div class="left"></div>
 <div class="gameArea" id="gameArea">
-  <canvas id='minimap' width='200' height='200'></canvas>
+	<div class='minimapcontainer'>
+		<canvas id='minimap' width='200' height='200'></canvas>
+	</div>
   <canvas id="gameCanvas"></canvas>
   <div id="gameText">test</div>
 <center><input type="submit" id="makegraph" value="Make a Graph"> &nbsp;&nbsp;&nbsp; <input type="submit" id="restart" value="Restart"></center><br />
@@ -29,9 +30,10 @@
 
 </center>
 	<script>	
-        $("canvas#gameCanvas").attr('width', $(window).width()*.98);
-        $("canvas#gameCanvas").attr('height', $(window).height()*.9);
-		console.log($('body').height());
+		var width = Math.floor(($(window).width()*.98)/32)*32
+		var height = Math.floor(($(window).height()*.9)/32)*32
+        $("canvas#gameCanvas").attr('width', width);
+        $("canvas#gameCanvas").attr('height', height);
 	</script>
 </body>
 </html>

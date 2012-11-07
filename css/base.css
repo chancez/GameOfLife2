@@ -4,39 +4,32 @@
   display:inline;
 }
 
-div.left
+div.minimapcontainer
 {
-	display:inline;
-	float:left;
+	position:absolute;
 }
 
 div.gameArea
 {
-	position:relative;
+	position:absolute;
 	margin-left:auto;
 	margin-right:auto;
 	font-family: Arial;
 	color:black;
 	font-weight:bold;
 	z-index:200;
-
 }
 
 canvas#gameCanvas
 {
 	position:relative;
 	border: 1px solid black;
-	padding-left: 0;
-	padding-right: 0;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 canvas#minimap
 {
 	float:left;
-	position:absolute;
-	display:block;
+	position:relative;
 	z-index:100;
 	border: 1px solid black;
 }
